@@ -10,7 +10,8 @@ Backend para la gestión de prácticas profesionales en la Universidad del Magda
 
 ## Estructura del Proyecto
 - `/src/routes` – Rutas de la API
-- `/src/controllers` – Controladores de lógica
+- `/src/controllers` – Controladores para la lógica
+- `/src/services` – Lógica de negocio
 - `/src/models` – Modelos de datos
 - `/src/config` – Configuración general
 
