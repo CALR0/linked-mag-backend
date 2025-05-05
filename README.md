@@ -20,11 +20,15 @@ Desde consola ejecutaremos el siguiente comando desde la raíz del proyecto:
 
 npm install
 
-# Ejecutar migraciones
+# Ejecutar migraciones y seeders
 
-Desde consola ingresar lo siguiente para crear la base de datos:
+Desde consola ingresar lo siguiente para crear las tablas en la base de datos:
 
 npm run migrate
+
+Para ejecutar los seeders luego, se ejecutará:
+
+npx sequelize-cli db:seed:all
 
 # Crear archivo .env en la raiz del proyecto
 
