@@ -1,58 +1,76 @@
 const { Student } = require('../models/index');
+const StudentService = require('../services/student.service');
 
 const StudentController = {
-  // Método de registro (sin cambios)
-  async register(req, res) {
+  // Método para crear un estudiante
+  async create(req, res) {
     try {
-      const { name, email, password, studentCode, academicPrograms } = req.body;
-
-      const newStudent = await Student.create({
-        name,
-        email,
-        password,
-        studentCode,
-        academicPrograms
-      });
-
-      const { password: _, ...studentWithoutPassword } = newStudent.toJSON();
-
-      return res.status(201).json(studentWithoutPassword);
+      const student = await StudentService.createStudent(req.body);
+      return res.status(201).json(student);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Error al registrar al estudiante' });
+      return res.status(500).json({ message: 'Error al crear al estudiante' });
     }
   },
 
   // Método para actualizar los datos de un estudiante
   async update(req, res) {
-    const { studentCode } = req.params;  // Obtener el studentCode desde la URL
-    const { name, password, academicPrograms } = req.body;  // Datos a actualizar
+    const { studentCode } = req.params;
 
     try {
-      // Buscar al estudiante por su studentCode
-      const student = await Student.findOne({ where: { studentCode } });
-
-      if (!student) {
-        return res.status(404).json({ message: 'Estudiante no encontrado' });
-      }
-
-      // Actualizar solo los campos permitidos
-      student.name = name || student.name;
-      student.password = password || student.password;
-      student.academicPrograms = academicPrograms || student.academicPrograms;
-
-      // Guardar los cambios
-      await student.save();
-
-      // Excluir la contraseña antes de devolver la respuesta
-      const { password: _, ...updatedStudent } = student.toJSON();
-
-      return res.json(updatedStudent);  // Devolver los datos del estudiante actualizado
+      const updatedStudent = await StudentService.updateStudent(studentCode, req.body);
+      return res.json(updatedStudent);
     } catch (error) {
       console.error(error);
+      if (error.message === 'Estudiante no encontrado') {
+        return res.status(404).json({ message: error.message });
+      }
       return res.status(500).json({ message: 'Error al actualizar los datos del estudiante' });
     }
-  }
+  },
+
+  // Método para obtener los datos de un estudiante
+  async read(req, res) {
+    const { studentCode } = req.params;
+
+    try {
+      const student = await StudentService.getStudentByCode(studentCode);
+      return res.json(student);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Estudiante no encontrado') {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al obtener los datos del estudiante' });
+    }
+  },
+
+  // Método para obtener la lista de estudiantes
+  async readAll(req, res) {
+    try {
+      const students = await StudentService.getAllStudents();
+      return res.json(students);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener la lista de estudiantes' });
+    }
+  },
+
+  // Método para eliminar un estudiante
+  async delete(req, res) {
+    const { studentCode } = req.params;
+
+    try {
+      const result = await StudentService.deleteStudent(studentCode);
+      return res.json(result);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Estudiante no encontrado') {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al eliminar al estudiante' });
+    }
+  },
 };
 
 module.exports = StudentController;
