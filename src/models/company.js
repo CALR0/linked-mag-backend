@@ -1,14 +1,15 @@
+'use strict';
 const bcrypt = require('bcryptjs');
-const { Model } = require('sequelize');
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Student extends Model {
+  class Company extends Model {
     static associate(models) {
       // define association here si luego se necesita
     }
   }
-
-  Student.init({
+  Company.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -21,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    studentCode: {
+    nitCode: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false
@@ -29,26 +30,20 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    academicProgram: {
-      type: DataTypes.JSONB,  // almacenar un array o objeto JSON
-      allowNull: false,
-      defaultValue: []
     }
   }, {
     sequelize,
-    modelName: 'Student',
-    tableName: 'students',
+    modelName: 'Company',
+    tableName: 'companies',
     timestamps: true,
     hooks: {
-      beforeCreate: async (student) => {
-        if (student.password) {
+      beforeCreate: async (company) => {
+        if (company.password) {
           const salt = await bcrypt.genSalt(10);
-          student.password = await bcrypt.hash(student.password, salt);
+          company.password = await bcrypt.hash(company.password, salt);
         }
       }
     }
   });
-
-  return Student;
+  return Company;
 };

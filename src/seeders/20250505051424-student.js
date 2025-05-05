@@ -1,5 +1,6 @@
 'use strict';
-// npx sequelize-cli db:seed:all
+// npx sequelize-cli db:seed:all para montar todos los seed
+// npx sequelize-cli db:migrate:undo:all para deshacer migraciones (y luego borramos tablas)
 module.exports = {
   // La función `up` se usa para insertar los datos
   async up(queryInterface, Sequelize) {
@@ -9,7 +10,7 @@ module.exports = {
         email: 'carlos.perez@example.com',
         password: 'hashedpassword1',  
         studentCode: '20250501',
-        academicPrograms: JSON.stringify('Ingeniería en Sistemas'),
+        academicProgram: JSON.stringify('Ingeniería en Sistemas'),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -18,7 +19,7 @@ module.exports = {
         email: 'maria.gomez@example.com',
         password: 'hashedpassword2',
         studentCode: '20250502',
-        academicPrograms: JSON.stringify('Derecho'),
+        academicProgram: JSON.stringify('Derecho'),
         createdAt: new Date(),
         updatedAt: new Date(),
       },

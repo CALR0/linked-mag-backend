@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const dotenv = require('dotenv');
 const StudentModel = require('./student');
+const CompanyModel = require('./company');
 
 dotenv.config();
 
@@ -18,12 +19,14 @@ const sequelize = new Sequelize(
 
 // Inicializar modelos
 const Student = StudentModel(sequelize, Sequelize.DataTypes);
+const Company = CompanyModel(sequelize, Sequelize.DataTypes); // Inicializar Company
 
 // Asociaciones, si las hay (por ahora no)
 const db = {
   sequelize,
   Sequelize,
   Student,
+  Company,
 };
 
 module.exports = db;

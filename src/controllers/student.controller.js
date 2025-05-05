@@ -2,7 +2,7 @@ const { Student } = require('../models/index');
 const StudentService = require('../services/student.service');
 
 const StudentController = {
-  // Método para crear un estudiante
+
   async create(req, res) {
     try {
       const student = await StudentService.createStudent(req.body);
@@ -13,7 +13,6 @@ const StudentController = {
     }
   },
 
-  // Método para actualizar los datos de un estudiante
   async update(req, res) {
     const { studentCode } = req.params;
 
@@ -29,7 +28,6 @@ const StudentController = {
     }
   },
 
-  // Método para obtener los datos de un estudiante
   async read(req, res) {
     const { studentCode } = req.params;
 
@@ -45,7 +43,6 @@ const StudentController = {
     }
   },
 
-  // Método para obtener la lista de estudiantes
   async readAll(req, res) {
     try {
       const students = await StudentService.getAllStudents();
@@ -56,7 +53,6 @@ const StudentController = {
     }
   },
 
-  // Método para eliminar un estudiante
   async delete(req, res) {
     const { studentCode } = req.params;
 
