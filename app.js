@@ -1,7 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const studentRoutes = require('./src/routes/student.routes.js');
-const companyRoutes = require('./src/routes/company.routes.js');
+const studentRoutes = require('./src/routes/studentRoutes');
+const companyRoutes = require('./src/routes/companyRoutes');
+const offerRoutes = require('./src/routes/offerRoutes');
+const postulationRoutes = require('./src/routes/postulationRoutes');
 const db = require('./src/models/index');  // Importamos la configuración de Sequelize
 
 dotenv.config();
@@ -17,6 +19,8 @@ db.sequelize.authenticate()
     // Enlazar las rutas
     app.use('/api/students', studentRoutes);
     app.use('/api/companies', companyRoutes);
+    app.use('/api/offers', offerRoutes);
+    app.use('/api/postulations', postulationRoutes);
 
     const PORT = process.env.PORT || 3000;
 

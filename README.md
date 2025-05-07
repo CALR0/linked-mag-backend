@@ -11,12 +11,10 @@ Backend para la gestión de prácticas profesionales en la Universidad del Magda
 
 - [Descripción](#descripción)
 - [Tecnologías](#tecnologías)
-- [Estructura del Proyecto](#estructura-del-proyecto)
 - [Instalación](#instalación)
 - [Configuración](#configuración)
 - [Ejecución](#ejecución)
 - [Base de Datos](#base-de-datos)
-- [Contribución](#contribución)
 
 ## 📝 Descripción
 
