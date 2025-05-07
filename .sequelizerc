@@ -1,6 +1,12 @@
 const path = require('path');
 
 module.exports = {
+  // Para CLI (requiere guiones)
+  'config': path.resolve('src', 'config', 'database.js'),
+  'models-path': path.resolve('src', 'models'),
+  'seeders-path': path.resolve('src', 'seeders'),
+  'migrations-path': path.resolve('src', 'migrations'),
+  
   // Ruta al archivo de configuración que usas para Sequelize
   config: path.resolve('src', 'config', 'config.js'),  // Apunta a tu archivo config.js
 

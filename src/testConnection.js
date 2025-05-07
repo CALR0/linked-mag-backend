@@ -2,13 +2,13 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(
-  'linkedmag_db',  // DB_NAME
-  'postgres',      // DB_USER
-  '1234',          // DB_PASSWORD
+  process.env.DB_NAME || 'linked_mag_db',
+  process.env.DB_USER || 'admin',
+  process.env.DB_PASSWORD || '123123',
   {
-    host: 'localhost',  // DB_HOST
+    host: process.env.DB_HOST || 'db',
     dialect: 'postgres',
-    port: 5432          // DB_PORT
+    port: process.env.DB_PORT || 5432
   }
 );
 

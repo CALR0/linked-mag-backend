@@ -48,10 +48,10 @@ Este proyecto proporciona una API RESTful para gestionar el proceso de práctica
 
    ```
    PORT=3000
-   DB_NAME=linkedmag_db
-   DB_USER=postgres
-   DB_PASSWORD=1234
-   DB_HOST=localhost
+   DB_NAME=linked_mag_db
+   DB_USER=admin
+   DB_PASSWORD=123123
+   DB_HOST=db
    DB_PORT=5432
    JWT_SECRET=your_jwt_secret_key
    NODE_ENV=development
@@ -59,7 +59,35 @@ Este proyecto proporciona una API RESTful para gestionar el proceso de práctica
 
    > **Nota:** Ajusta los valores según tu entorno local.
 
-## 🗄️ Base de Datos
+2. Opcional: para desarrollo local sin Docker, cambia DB_HOST=localhost.
+
+## 🔧 Uso con Docker
+
+1.  Asegúrate de tener Docker y Docker Compose instalados.
+    
+2.  Levantar los contenedores:
+    
+    ```bash
+    docker-compose up -d --build
+    
+    ```
+    
+3.  Aplicar migraciones y seeders dentro del contenedor de backend:
+    
+    ```bash
+    docker-compose exec backend npx sequelize-cli db:migrate
+    docker-compose exec backend npx sequelize-cli db:seed:all
+    
+    ```
+    
+4.  Para detener y limpiar contenedores:
+    
+    ```bash
+    docker-compose down
+    
+    ```
+
+## 🗄️ Base de Datos Local
 
 1. **Crear la base de datos**:
    ```bash

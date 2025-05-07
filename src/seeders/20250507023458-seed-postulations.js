@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('postulations', [
       {
-        academicProgram: 'Ingeniería de Sistemas',
+        academicProgram: Sequelize.literal(`'{"program": "Ingeniería de Sistemas"}'::jsonb`),
         status: 'Pendiente',
         studentId: 1,
         offerId: 1,
@@ -12,7 +12,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        academicProgram: 'Ingeniería de Software',
+        academicProgram: Sequelize.literal(`'{"program": "Ingeniería de Software"}'::jsonb`),
         status: 'Aprobado',
         studentId: 2,
         offerId: 2,
