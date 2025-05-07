@@ -1,5 +1,4 @@
-const { Company } = require('../models/index');
-const CompanyService = require('../services/company.service');
+const CompanyService = require('../services/companyService');
 
 const CompanyController = {
  

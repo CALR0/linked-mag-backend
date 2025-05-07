@@ -6,7 +6,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Company extends Model {
     static associate(models) {
-      // define association here si luego se necesita
+      // Relación: Una empresa tiene muchas ofertas
+      Company.hasMany(models.Offer, {
+        foreignKey: 'companyId',
+        as: 'offers'
+      });
     }
   }
   Company.init({

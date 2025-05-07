@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { create, update, read, readAll, delete: deleteStudent } = require('../controllers/student.controller');
+const { create, update, read, readAll, delete: deleteStudent } = require('../controllers/studentController');
 
 router.post('/', create);
 

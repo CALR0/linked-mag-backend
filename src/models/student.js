@@ -4,7 +4,11 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Student extends Model {
     static associate(models) {
-      // define association here si luego se necesita
+      // Relación: Un estudiante tiene muchas postulaciones
+      Student.hasMany(models.Postulation, {
+        foreignKey: 'studentId',
+        as: 'postulations'
+      });
     }
   }
 
@@ -31,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     academicProgram: {
-      type: DataTypes.JSONB,  // almacenar un array o objeto JSON
+      type: DataTypes.JSONB, // almacenar un array o objeto JSON
       allowNull: false,
       defaultValue: []
     }

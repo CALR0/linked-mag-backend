@@ -3,6 +3,8 @@ const process = require('process');
 const dotenv = require('dotenv');
 const StudentModel = require('./student');
 const CompanyModel = require('./company');
+const OfferModel = require('./offer');
+const PostulationModel = require('./postulation');
 
 dotenv.config();
 
@@ -19,14 +21,24 @@ const sequelize = new Sequelize(
 
 // Inicializar modelos
 const Student = StudentModel(sequelize, Sequelize.DataTypes);
-const Company = CompanyModel(sequelize, Sequelize.DataTypes); // Inicializar Company
+const Company = CompanyModel(sequelize, Sequelize.DataTypes);
+const Offer = OfferModel(sequelize, Sequelize.DataTypes);
+const Postulation = PostulationModel(sequelize, Sequelize.DataTypes);
 
-// Asociaciones, si las hay (por ahora no)
+// Crear el objeto db
 const db = {
   sequelize,
   Sequelize,
   Student,
   Company,
+  Offer,
+  Postulation
 };
+
+// Asociaciones
+Company.associate(db);
+Offer.associate(db);
+Postulation.associate(db);
+Student.associate(db);
 
 module.exports = db;

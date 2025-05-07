@@ -1,5 +1,4 @@
-const { Student } = require('../models/index');
-const StudentService = require('../services/student.service');
+const StudentService = require('../services/studentService');
 
 const StudentController = {
 
