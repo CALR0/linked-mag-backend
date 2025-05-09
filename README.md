@@ -59,7 +59,7 @@ Este proyecto proporciona una API RESTful para gestionar el proceso de práctica
 
    > **Nota:** Ajusta los valores según tu entorno local.
 
-2. Opcional: para desarrollo local sin Docker, cambia DB_HOST=localhost.
+2. Opcional: para desarrollo local sin Docker, cambia el parametro a DB_HOST=localhost.
 
 ## 🔧 Uso con Docker
 
