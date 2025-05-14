@@ -35,11 +35,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      status: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'Pendiente' // Valor inicial
-      },
       publicationDate: {
         type: Sequelize.DATE,
         allowNull: false

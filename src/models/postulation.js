@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'offerId',
         as: 'offer'
       });
+
+      // Relación: Una postulación tiene un estado
+      Postulation.hasOne(models.PostulationStatus, {
+        foreignKey: 'postulationId',
+        as: 'status'
+      });
     }
   }
 
@@ -22,14 +28,6 @@ module.exports = (sequelize, DataTypes) => {
     academicProgram: {
       type: DataTypes.JSONB,
       allowNull: false
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'Pendiente',
-      validate: {
-        isIn: [['Pendiente', 'Aprobado', 'Rechazado']]
-      }
     },
     studentId: {
       type: DataTypes.INTEGER,

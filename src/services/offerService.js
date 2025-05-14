@@ -1,4 +1,4 @@
-const { Offer, Company } = require('../models/index');
+const { Offer, OfferStatus, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
@@ -11,7 +11,22 @@ const OfferService = {
       companyId,
       location,
       publicationDate,
-      closingDate,
+      closingDate
+    });
+
+    // Calcular el estado inicial de la oferta
+    const now = new Date();
+    let status = 'Pendiente';
+    if (now >= new Date(publicationDate) && now <= new Date(closingDate)) {
+      status = 'Abierta';
+    } else if (now > new Date(closingDate)) {
+      status = 'Cerrada';
+    }
+
+    // Crear el estado inicial en la tabla offerStatuses
+    await OfferStatus.create({
+      status,
+      offerId: newOffer.id
     });
 
     return newOffer;
@@ -33,12 +48,29 @@ const OfferService = {
     offer.closingDate = closingDate || offer.closingDate;
 
     await offer.save();
+
+    // Actualizar el estado en función de las fechas
+    const now = new Date();
+    let status = 'Pendiente';
+    if (now >= new Date(offer.publicationDate) && now <= new Date(offer.closingDate)) {
+      status = 'Abierta';
+    } else if (now > new Date(offer.closingDate)) {
+      status = 'Cerrada';
+    }
+
+    const offerStatus = await OfferStatus.findOne({ where: { offerId: id } });
+    offerStatus.status = status;
+    await offerStatus.save();
+
     return offer;
   },
 
   async getOfferById(id) {
     const offer = await Offer.findByPk(id, {
-      include: ['company'], // Incluir la relación con la empresa
+      include: [
+        { model: Company, as: 'company' },
+        { model: OfferStatus, as: 'status' }
+      ]
     });
     if (!offer) {
       throw new Error('Oferta no encontrada');
@@ -48,7 +80,10 @@ const OfferService = {
 
   async getAllOffers() {
     const offers = await Offer.findAll({
-      include: ['company'], // Incluir la relación con la empresa
+      include: [
+        { model: Company, as: 'company' },
+        { model: OfferStatus, as: 'status' }
+      ]
     });
     return offers;
   },
@@ -58,9 +93,10 @@ const OfferService = {
     if (!offer) {
       throw new Error('Oferta no encontrada');
     }
-    await offer.destroy();
+    await Offer.destroy({ where: { id } });
+    await OfferStatus.destroy({ where: { offerId: id } });
     return { message: 'Oferta eliminada correctamente' };
-  },
+  }
 };
 
 module.exports = OfferService;

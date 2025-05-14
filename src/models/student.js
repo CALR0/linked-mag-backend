@@ -9,6 +9,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'studentId',
         as: 'postulations'
       });
+
+      // Relación: Un estudiante tiene un currículum
+      Student.hasOne(models.CurriculumVitae, {
+        foreignKey: 'studentId',
+        as: 'curriculum'
+      });
     }
   }
 

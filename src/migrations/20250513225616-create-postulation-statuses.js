@@ -2,32 +2,25 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('postulations', {
+    await queryInterface.createTable('postulationStatuses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      academicProgram: {
-        type: Sequelize.JSONB,
-        allowNull: false
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [['Pendiente', 'Aprobado', 'Rechazado']]
+        }
       },
-      studentId: {
+      postulationId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'students', // Relación con la tabla students
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      offerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'offers', // Relación con la tabla offers
+          model: 'postulations', // Relación con la tabla postulations
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -45,6 +38,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('postulations');
+    await queryInterface.dropTable('postulationStatuses');
   }
 };

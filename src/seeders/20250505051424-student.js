@@ -1,6 +1,7 @@
 'use strict';
 // npx sequelize-cli db:seed:all para montar todos los seed
 // npx sequelize-cli db:migrate:undo:all para deshacer migraciones (y luego borramos tablas)
+// npx sequelize-cli db:migrate (crear tablas migration)
 module.exports = {
   // La función `up` se usa para insertar los datos
   async up(queryInterface, Sequelize) {

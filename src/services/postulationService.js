@@ -1,4 +1,4 @@
-const { Postulation, Student, Offer } = require('../models/index');
+const { Postulation, PostulationStatus, Student, Offer } = require('../models/index');
 
 const PostulationService = {
   async createPostulation(data) {
@@ -6,9 +6,14 @@ const PostulationService = {
 
     const newPostulation = await Postulation.create({
       academicProgram,
-      status,
       studentId,
       offerId
+    });
+
+    // Crear el estado inicial de la postulación
+    await PostulationStatus.create({
+      status: status || 'Pendiente',
+      postulationId: newPostulation.id
     });
 
     return newPostulation;
@@ -23,9 +28,14 @@ const PostulationService = {
     }
 
     postulation.academicProgram = academicProgram || postulation.academicProgram;
-    postulation.status = status || postulation.status;
-
     await postulation.save();
+
+    if (status) {
+      const postulationStatus = await PostulationStatus.findOne({ where: { postulationId: id } });
+      postulationStatus.status = status;
+      await postulationStatus.save();
+    }
+
     return postulation;
   },
 
@@ -33,7 +43,8 @@ const PostulationService = {
     const postulation = await Postulation.findByPk(id, {
       include: [
         { model: Student, as: 'student' },
-        { model: Offer, as: 'offer' }
+        { model: Offer, as: 'offer' },
+        { model: PostulationStatus, as: 'status' }
       ]
     });
     if (!postulation) {
@@ -46,7 +57,8 @@ const PostulationService = {
     const postulations = await Postulation.findAll({
       include: [
         { model: Student, as: 'student' },
-        { model: Offer, as: 'offer' }
+        { model: Offer, as: 'offer' },
+        { model: PostulationStatus, as: 'status' }
       ]
     });
     return postulations;
@@ -57,7 +69,8 @@ const PostulationService = {
     if (!postulation) {
       throw new Error('Postulación no encontrada');
     }
-    await postulation.destroy();
+    await Postulation.destroy({ where: { id } });
+    await PostulationStatus.destroy({ where: { postulationId: id } });
     return { message: 'Postulación eliminada correctamente' };
   },
 };

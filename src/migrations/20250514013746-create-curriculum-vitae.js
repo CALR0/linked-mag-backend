@@ -2,16 +2,12 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('postulations', {
+    await queryInterface.createTable('curriculumVitae', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      academicProgram: {
-        type: Sequelize.JSONB,
-        allowNull: false
       },
       studentId: {
         type: Sequelize.INTEGER,
@@ -23,15 +19,9 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      offerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'offers', // Relación con la tabla offers
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+      filePath: {
+        type: Sequelize.STRING, // Ruta o nombre del archivo PDF
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
@@ -45,6 +35,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('postulations');
+    await queryInterface.dropTable('curriculumVitae');
   }
 };

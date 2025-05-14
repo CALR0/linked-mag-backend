@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'offerId',
         as: 'postulations'
       });
+
+      // Relación: Una oferta tiene un estado
+      Offer.hasOne(models.OfferStatus, {
+        foreignKey: 'offerId',
+        as: 'status'
+      });
     }
   }
 
@@ -31,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [['virtual', 'presencial']] // Solo estos
+        isIn: [['virtual', 'presencial']]
       }
     },
     companyId: {
@@ -49,29 +55,12 @@ module.exports = (sequelize, DataTypes) => {
     closingDate: {
       type: DataTypes.DATE,
       allowNull: false
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'Pendiente'
     }
   }, {
     sequelize,
     modelName: 'Offer',
     tableName: 'offers',
-    timestamps: true,
-    hooks: {
-      beforeSave: (offer) => {
-        const now = new Date();
-        if (now > offer.closingDate) {
-          offer.status = 'Cerrada';
-        } else if (now >= offer.publicationDate && now <= offer.closingDate) {
-          offer.status = 'Abierta';
-        } else {
-          offer.status = 'Pendiente';
-        }
-      }
-    }
+    timestamps: true
   });
 
   return Offer;
