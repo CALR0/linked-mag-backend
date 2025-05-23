@@ -42,6 +42,21 @@ const StudentController = {
     }
   },
 
+  async getById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const student = await StudentService.getStudentById(id);
+      return res.json(student);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Estudiante no encontrado') {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al obtener los datos del estudiante' });
+    }
+  },
+
   async readAll(req, res) {
     try {
       const students = await StudentService.getAllStudents();

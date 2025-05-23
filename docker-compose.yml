@@ -1,4 +1,4 @@
-version: '3.8'
+
 services:
     db:
         image: postgres:16
@@ -12,11 +12,6 @@ services:
             POSTGRES_DB: linked_mag_db
         volumes:
             - postgres_data:/var/lib/postgresql/data
-        healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U admin -d linked_mag_db"]
-            interval: 5s
-            timeout: 5s
-            retries: 5
     
     backend:
         build:

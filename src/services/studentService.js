@@ -43,6 +43,15 @@ const StudentService = {
     return studentWithoutPassword;
   },
 
+  async getStudentById(id) {
+    const student = await Student.findOne({ where: { id } });
+    if (!student) {
+      throw new Error('Estudiante no encontrado');
+    }
+    const { password: _, ...studentWithoutPassword } = student.toJSON();
+    return studentWithoutPassword;
+  },
+
   async getAllStudents() {
     const students = await Student.findAll();
     return students.map(student => {
