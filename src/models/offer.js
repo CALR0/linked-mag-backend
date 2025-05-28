@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [['virtual', 'presencial']]
+        isIn: [['Presencial', 'Híbrido', 'Remoto']]
       }
     },
     companyId: {
@@ -55,6 +55,14 @@ module.exports = (sequelize, DataTypes) => {
     closingDate: {
       type: DataTypes.DATE,
       allowNull: false
+    },
+    phoneNumber: {
+      type: DataTypes.BIGINT,
+      allowNull: true
+    },
+    salary: {
+      type: DataTypes.BIGINT,
+      allowNull: true
     }
   }, {
     sequelize,

@@ -2,7 +2,7 @@ const { Offer, OfferStatus, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
-    const { title, description, modality, companyId, location, publicationDate, closingDate } = data;
+    const { title, description, modality, companyId, location, publicationDate, closingDate, phoneNumber, salary } = data;
 
     const newOffer = await Offer.create({
       title,
@@ -11,7 +11,9 @@ const OfferService = {
       companyId,
       location,
       publicationDate,
-      closingDate
+      closingDate,
+      phoneNumber,
+      salary
     });
 
     // Calcular el estado inicial de la oferta
@@ -33,7 +35,7 @@ const OfferService = {
   },
 
   async updateOffer(id, data) {
-    const { title, description, modality, location, publicationDate, closingDate } = data;
+    const { title, description, modality, location, publicationDate, closingDate, phoneNumber, salary } = data;
 
     const offer = await Offer.findByPk(id);
     if (!offer) {
@@ -46,6 +48,8 @@ const OfferService = {
     offer.location = location || offer.location;
     offer.publicationDate = publicationDate || offer.publicationDate;
     offer.closingDate = closingDate || offer.closingDate;
+    offer.phoneNumber = phoneNumber || offer.phoneNumber;
+    offer.salary = salary || offer.salary;
 
     await offer.save();
 
@@ -85,6 +89,7 @@ const OfferService = {
         { model: OfferStatus, as: 'status' }
       ]
     });
+    console.log(offers[0].toJSON()); // <-- Agrega esto
     return offers;
   },
 

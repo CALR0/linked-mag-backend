@@ -9,30 +9,33 @@ module.exports = {
         {
           title: 'Desarrollador Backend',
           description: 'Se busca desarrollador con experiencia en Node.js y PostgreSQL.',
-          modality: 'virtual',
+          modality: 'Presencial',
           companyId: 1,
           location: 'Santa Marta',
           publicationDate: '2025-05-01',
           closingDate: '2025-05-31',
+          phoneNumber: 3001234567,
+          salary: 5000000,
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           title: 'Diseñador UX/UI',
           description: 'Se busca diseñador UX/UI con experiencia en diseño de interfaces web.',
-          modality: 'presencial',
+          modality: 'Remoto',
           companyId: 2,
           location: 'Barranquilla',
           publicationDate: '2025-04-01',
           closingDate: '2025-04-30',
+          phoneNumber: 3019876543,
+          salary: 4000000,
           createdAt: new Date(),
           updatedAt: new Date()
         }
       ],
-      { returning: true } // Devuelve las ofertas insertadas
+      { returning: true }
     );
 
-    // Insertar estados de las ofertas
     const now = new Date();
     const offerStatuses = offers.map((offer) => {
       let status = 'Pendiente';

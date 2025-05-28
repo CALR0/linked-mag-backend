@@ -43,6 +43,14 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
+      phoneNumber: {
+        type: Sequelize.BIGINT,
+        allowNull: true
+      },
+      salary: {
+        type: Sequelize.BIGINT,
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
