@@ -72,12 +72,12 @@ Este proyecto proporciona una API RESTful para gestionar el proceso de práctica
     
     ```
     
-3.  Aplicar migraciones y seeders dentro del contenedor de backend:
+3.  Aplicar migraciones, seeders dentro del contenedor de backend y ejecutar:
     
     ```bash
     docker-compose exec backend npx sequelize-cli db:migrate
     docker-compose exec backend npx sequelize-cli db:seed:all
-    
+    docker-compose exec backend npm run dev
     ```
     
 4.  Para detener y limpiar contenedores:
