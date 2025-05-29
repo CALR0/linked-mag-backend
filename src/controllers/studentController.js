@@ -4,11 +4,21 @@ const StudentController = {
 
   async create(req, res) {
     try {
-      const student = await StudentService.createStudent(req.body);
+      const studentData = {
+        ...req.body,
+        academicProgram: req.body.academicProgram || {}
+      };
+
+      const student = await StudentService.createStudent(studentData);
       return res.status(201).json(student);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error al crear al estudiante' });
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        return res.status(409).json({ // 409 Conflict
+          message: 'El correo o código estudiantil ya está registrado',
+        });
+      }
+      console.error("Error al registrar estudiante:", error);
+      return res.status(500).json({ message: 'Error interno del servidor' });
     }
   },
 

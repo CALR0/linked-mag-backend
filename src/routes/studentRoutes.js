@@ -6,9 +6,9 @@ router.post('/', create);
 
 router.put('/:studentCode', update);
 
-router.get('/:id', getById);
+router.get('/id/:id', getById);
 
-router.get('/:studentCode', read);
+router.get('/code/:studentCode', read);
 
 router.get('/', readAll);
 

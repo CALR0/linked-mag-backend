@@ -2,14 +2,19 @@ const { Student } = require('../models/index');
 
 const StudentService = {
   async createStudent(data) {
-    const { name, email, password, studentCode, academicPrograms } = data;
+    const { name, email, password, studentCode, academicProgram } = data;
+
+    // Validar academicProgram
+    if (!academicProgram?.name || !academicProgram?.code) {
+      throw new Error('El programa académico debe tener nombre y código');
+    }
 
     const newStudent = await Student.create({
       name,
       email,
       password,
       studentCode,
-      academicPrograms,
+      academicProgram,
     });
 
     const { password: _, ...studentWithoutPassword } = newStudent.toJSON();
@@ -17,7 +22,7 @@ const StudentService = {
   },
 
   async updateStudent(studentCode, data) {
-    const { name, password, academicPrograms } = data;
+    const { name, password, academicProgram } = data;
 
     const student = await Student.findOne({ where: { studentCode } });
     if (!student) {
@@ -26,7 +31,7 @@ const StudentService = {
 
     student.name = name || student.name;
     student.password = password || student.password;
-    student.academicPrograms = academicPrograms || student.academicPrograms;
+    student.academicProgram = academicProgram || student.academicProgram;
 
     await student.save();
 

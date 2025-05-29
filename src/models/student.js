@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     studentCode: {
       type: DataTypes.STRING,
+      validate: {
+        len: [10, 10],
+        isNumeric: true
+      },
       unique: true,
       allowNull: false
     },
