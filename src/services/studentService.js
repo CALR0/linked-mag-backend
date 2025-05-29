@@ -39,14 +39,21 @@ const StudentService = {
     return updatedStudent;
   },
 
-  async getStudentByCode(studentCode) {
+  async findStudentByCode(studentCode) {
     const student = await Student.findOne({ where: { studentCode } });
     if (!student) {
       throw new Error('Estudiante no encontrado');
     }
+    return student; // con password incluido, SOLO para login
+  },
+
+
+  async getStudentByCode(studentCode) {
+    const student = await this.findStudentByCode(studentCode);
     const { password: _, ...studentWithoutPassword } = student.toJSON();
     return studentWithoutPassword;
   },
+
 
   async getStudentById(id) {
     const student = await Student.findOne({ where: { id } });
