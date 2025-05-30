@@ -1,4 +1,5 @@
 const StudentService = require('../services/studentService');
+const PostulationService = require('../services/postulationService');
 const bcrypt = require('bcrypt'); // para comparar password hasheado
 const jwt = require('jsonwebtoken');
 
@@ -129,6 +130,38 @@ const StudentController = {
     }
   },
 
+  async getStudentProfile(req, res) {
+    try {
+      const studentId = req.user.id; // Assuming user ID is available in req.user
+      const student = await StudentService.getStudentById(studentId);
+      return res.json(student);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener el perfil del estudiante' });
+    }
+  },
+
+  async getLastAppliedOffer(req, res) {
+    const { id } = req.params;
+    try {
+      const lastAppliedOffer = await PostulationService.getLastAppliedOffer(id);
+      return res.json(lastAppliedOffer);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener la última oferta aplicada' });
+    }
+  },
+
+  async getAppliedOffersCount(req, res) {
+    const { id } = req.params;
+    try {
+      const count = await PostulationService.getAppliedOffersCount(id);
+      return res.json({ count });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener el número de ofertas aplicadas' });
+    }
+  },
 };
 
 module.exports = StudentController;

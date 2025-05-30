@@ -73,6 +73,31 @@ const PostulationService = {
     await PostulationStatus.destroy({ where: { postulationId: id } });
     return { message: 'Postulación eliminada correctamente' };
   },
+
+  async getLastAppliedOffer(studentId) {
+    const lastPostulation = await Postulation.findOne({
+      where: { studentId },
+      include: { model: Offer, as: 'offer' },
+      order: [['createdAt', 'DESC']]
+    });
+
+    if (!lastPostulation) {
+      throw new Error('No se encontraron postulaciones');
+    }
+
+    const offer = lastPostulation.offer;
+    return {
+      title: offer.title,
+      category: offer.description, // Assuming description represents category
+      deadline: offer.closingDate,
+      vacancies: offer.vacancies, // Assuming vacancies exist
+      applicants: await Postulation.count({ where: { offerId: offer.id } })
+    };
+  },
+
+  async getAppliedOffersCount(studentId) {
+    return await Postulation.count({ where: { studentId } });
+  },
 };
 
 module.exports = PostulationService;

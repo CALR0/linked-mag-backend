@@ -84,13 +84,14 @@ const OfferService = {
 
   async getAllOffers() {
     const offers = await Offer.findAll({
-      include: [
-        { model: Company, as: 'company' },
-        { model: OfferStatus, as: 'status' }
-      ]
+      include: { model: Company, as: 'company' }
     });
-    console.log(offers[0].toJSON()); // <-- Agrega esto
-    return offers;
+    return offers.map(offer => ({
+      title: offer.title,
+      location: offer.location,
+      deadline: offer.closingDate,
+      companyLogo: offer.company.logoUrl // Assuming logoUrl exists in company
+    }));
   },
 
   async deleteOffer(id) {
