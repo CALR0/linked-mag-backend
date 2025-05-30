@@ -17,3 +17,4 @@ router.delete('/:studentCode', deleteStudent);
 router.post('/login', login);
 
 module.exports = router;
+
