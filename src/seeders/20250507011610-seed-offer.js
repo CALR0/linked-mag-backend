@@ -16,6 +16,7 @@ module.exports = {
           closingDate: '2025-05-31',
           phoneNumber: 3001234567,
           salary: 5000000,
+          requirements: ['Node.js', 'PostgreSQL', 'Git'], // Added requirements
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -29,6 +30,7 @@ module.exports = {
           closingDate: '2025-04-30',
           phoneNumber: 3019876543,
           salary: 4000000,
+          requirements: ['Figma', 'Adobe XD', 'HTML/CSS'], // Added requirements
           createdAt: new Date(),
           updatedAt: new Date()
         }

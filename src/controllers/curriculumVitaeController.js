@@ -45,6 +45,32 @@ const CurriculumVitaeController = {
       }
       return res.status(500).json({ message: 'Error al obtener el currículum' });
     }
+  },
+
+  async update(req, res) {
+    const { studentId } = req.params;
+    const filePath = req.file ? req.file.path : null; // Ruta del archivo subido
+
+    try {
+      const updatedCurriculum = await CurriculumVitaeService.updateCurriculum(studentId, filePath);
+      return res.json(updatedCurriculum);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Currículum no encontrado') {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al actualizar el currículum' });
+    }
+  },
+
+  async getAll(req, res) {
+    try {
+      const curricula = await CurriculumVitaeService.getAllCurricula();
+      return res.json(curricula);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener los currículums' });
+    }
   }
 };
 

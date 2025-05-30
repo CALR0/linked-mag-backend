@@ -9,4 +9,10 @@ router.get('/:studentId', CurriculumVitaeController.getByStudentId);
 
 router.delete('/:studentId', CurriculumVitaeController.delete);
 
+router.get('/', CurriculumVitaeController.getAll);
+
+router.get('/student/:studentId', CurriculumVitaeController.getByStudentId);
+
+router.put('/:studentId', upload.single('file'), CurriculumVitaeController.update);
+
 module.exports = router;

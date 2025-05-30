@@ -2,7 +2,7 @@ const { Offer, OfferStatus, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
-    const { title, description, modality, companyId, location, publicationDate, closingDate, phoneNumber, salary } = data;
+    const { title, description, modality, companyId, location, publicationDate, closingDate, phoneNumber, salary, requirements, vacancies } = data;
 
     const newOffer = await Offer.create({
       title,
@@ -13,7 +13,10 @@ const OfferService = {
       publicationDate,
       closingDate,
       phoneNumber,
-      salary
+      salary,
+      requirements: Array.isArray(requirements) ? requirements : [], // Validar que sea un arreglo
+      vacancies,
+      applicants: data.applicants || 0 // Nuevo campo con valor inicial
     });
 
     // Calcular el estado inicial de la oferta
@@ -35,7 +38,7 @@ const OfferService = {
   },
 
   async updateOffer(id, data) {
-    const { title, description, modality, location, publicationDate, closingDate, phoneNumber, salary } = data;
+    const { title, description, modality, location, publicationDate, closingDate, phoneNumber, salary, requirements, vacancies, applicants } = data;
 
     const offer = await Offer.findByPk(id);
     if (!offer) {
@@ -50,6 +53,9 @@ const OfferService = {
     offer.closingDate = closingDate || offer.closingDate;
     offer.phoneNumber = phoneNumber || offer.phoneNumber;
     offer.salary = salary || offer.salary;
+    offer.requirements = Array.isArray(requirements) ? requirements : offer.requirements; // Validar que sea un arreglo
+    offer.vacancies = vacancies || offer.vacancies;
+    offer.applicants = applicants || offer.applicants;
 
     await offer.save();
 
@@ -69,29 +75,22 @@ const OfferService = {
     return offer;
   },
 
-  async getOfferById(id) {
-    const offer = await Offer.findByPk(id, {
+  async getAllOffers() {
+    return await Offer.findAll({
       include: [
         { model: Company, as: 'company' },
         { model: OfferStatus, as: 'status' }
       ]
     });
-    if (!offer) {
-      throw new Error('Oferta no encontrada');
-    }
-    return offer;
   },
 
-  async getAllOffers() {
-    const offers = await Offer.findAll({
-      include: { model: Company, as: 'company' }
+  async getOfferById(id) {
+    return await Offer.findByPk(id, {
+      include: [
+        { model: Company, as: 'company' },
+        { model: OfferStatus, as: 'status' }
+      ]
     });
-    return offers.map(offer => ({
-      title: offer.title,
-      location: offer.location,
-      deadline: offer.closingDate,
-      companyLogo: offer.company.logoUrl // Assuming logoUrl exists in company
-    }));
   },
 
   async deleteOffer(id) {

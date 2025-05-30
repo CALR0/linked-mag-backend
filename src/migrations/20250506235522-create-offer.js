@@ -51,6 +51,10 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: true
       },
+      requirements: {
+        type: Sequelize.ARRAY(Sequelize.STRING), // Array of strings for requirements
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

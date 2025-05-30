@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { create, update, read, readAll, delete: deleteCompany } = require('../controllers/companyController');
+const CompanyController = require('../controllers/companyController');
 
-router.post('/', create);
+router.post('/', CompanyController.create);
 
-router.put('/:nitCode', update);
+router.put('/:nitCode', CompanyController.update);
 
-router.get('/:nitCode', read);
+router.get('/:nitCode', CompanyController.read);
 
-router.get('/', readAll);
+router.get('/', CompanyController.readAll);
 
-router.delete('/:nitCode', deleteCompany);
+router.delete('/:nitCode', CompanyController.delete);
 
 module.exports = router;

@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { create, update, read, readAll, delete: deletePostulation } = require('../controllers/postulationController');
+const PostulationController = require('../controllers/postulationController');
 
-router.post('/', create);
+router.post('/', PostulationController.create);
 
-router.put('/:id', update);
+router.put('/:id', PostulationController.update);
 
-router.get('/:id', read);
+router.get('/:id', PostulationController.read);
 
-router.get('/', readAll);
+router.get('/', PostulationController.readAll);
 
-router.delete('/:id', deletePostulation);
+router.delete('/:id', PostulationController.delete);
 
 module.exports = router;

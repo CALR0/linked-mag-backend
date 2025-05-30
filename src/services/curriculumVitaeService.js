@@ -60,7 +60,37 @@ const CurriculumVitaeService = {
 
     // *** MODIFICACIÓN: Devuelve null si no se encuentra, en lugar de lanzar un error ***
     return curriculum || null;
-  }
+  },
+
+  async updateCurriculum(studentId, filePath) {
+    const curriculum = await CurriculumVitae.findOne({ where: { studentId } });
+    if (!curriculum) {
+      throw new Error('Currículum no encontrado');
+    }
+
+    // Eliminar el archivo anterior si existe
+    if (curriculum.filePath) {
+      const absoluteFilePath = path.join(__dirname, '../../', curriculum.filePath);
+      if (fs.existsSync(absoluteFilePath)) {
+        try {
+          fs.unlinkSync(absoluteFilePath);
+        } catch (unlinkError) {
+          console.error('Error al eliminar el archivo anterior:', unlinkError);
+        }
+      }
+    }
+
+    // Actualizar el registro con la nueva ruta
+    curriculum.filePath = filePath;
+    await curriculum.save();
+    return curriculum;
+  },
+
+  async getAllCurricula() {
+    return await CurriculumVitae.findAll({
+      include: { model: Student, as: 'student' }
+    });
+  },
 };
 
 module.exports = CurriculumVitaeService;

@@ -63,6 +63,19 @@ module.exports = (sequelize, DataTypes) => {
     salary: {
       type: DataTypes.BIGINT,
       allowNull: true
+    },
+    requirements: {
+      type: DataTypes.ARRAY(DataTypes.STRING), // Array of strings for requirements
+      allowNull: true
+    },
+    vacancies: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    applicants: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0 // Default to 0 applicants
     }
   }, {
     sequelize,
