@@ -66,6 +66,21 @@ const OfferController = {
       return res.status(500).json({ message: 'Error al eliminar la oferta' });
     }
   },
+
+  async getAllOffers(req, res) {
+    try {
+      const offers = await OfferService.getAllOffers();
+      return res.json(offers.map(offer => ({
+        title: offer.title,
+        location: offer.location,
+        deadline: offer.closingDate,
+        companyLogo: offer.company.logoUrl // Assuming logoUrl exists in company
+      })));
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener las ofertas' });
+    }
+  },
 };
 
 module.exports = OfferController;
