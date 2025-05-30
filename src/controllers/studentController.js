@@ -1,14 +1,26 @@
 const StudentService = require('../services/studentService');
+const bcrypt = require('bcrypt'); // para comparar password hasheado
+const jwt = require('jsonwebtoken');
 
 const StudentController = {
 
   async create(req, res) {
     try {
-      const student = await StudentService.createStudent(req.body);
+      const studentData = {
+        ...req.body,
+        academicProgram: req.body.academicProgram || {}
+      };
+
+      const student = await StudentService.createStudent(studentData);
       return res.status(201).json(student);
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error al crear al estudiante' });
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        return res.status(409).json({ // 409 Conflict
+          message: 'El correo o código estudiantil ya está registrado',
+        });
+      }
+      console.error("Error al registrar estudiante:", error);
+      return res.status(500).json({ message: 'Error interno del servidor' });
     }
   },
 
@@ -27,7 +39,7 @@ const StudentController = {
     }
   },
 
-  async read(req, res) {
+  async getByCode(req, res) {
     const { studentCode } = req.params;
 
     try {
@@ -57,7 +69,7 @@ const StudentController = {
     }
   },
 
-  async readAll(req, res) {
+  async getAll(req, res) {
     try {
       const students = await StudentService.getAllStudents();
       return res.json(students);
@@ -81,6 +93,42 @@ const StudentController = {
       return res.status(500).json({ message: 'Error al eliminar al estudiante' });
     }
   },
+
+  async login(req, res) {
+    const { studentCode, password } = req.body;
+    try {
+      const student = await StudentService.findStudentByCode(studentCode);
+
+      if (!student) {
+        return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+
+      // Compara la contraseña recibida con la almacenada (hashed)
+      const validPassword = await bcrypt.compare(password, student.password);
+      if (!validPassword) {
+        return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+
+      // Generar token JWT (ajusta el secret y expiración)
+      const token = jwt.sign({ id: student.id, studentCode: student.studentCode }, process.env.JWT_SECRET || 'secreto', {
+        expiresIn: '1h',
+      });
+
+      const { password: _, ...studentWithoutPassword } = student.toJSON();
+
+      return res.json({
+        token,
+        student: studentWithoutPassword
+      });
+    } catch (error) {
+      if (error.message === 'Estudiante no encontrado') {
+        return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+      console.error('Error en login:', error);
+      return res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  },
+
 };
 
 module.exports = StudentController;

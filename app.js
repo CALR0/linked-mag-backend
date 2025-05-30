@@ -1,16 +1,27 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const studentRoutes = require('./src/routes/studentRoutes');
 const companyRoutes = require('./src/routes/companyRoutes');
 const offerRoutes = require('./src/routes/offerRoutes');
 const postulationRoutes = require('./src/routes/postulationRoutes');
 const curriculumVitaeRoutes = require('./src/routes/curriculumVitaeRoutes');
-const db = require('./src/models/index');  // Importamos la configuración de Sequelize
+const db = require('./src/models/index'); 
+const morgan = require('morgan');
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:4200',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
+
+app.use(morgan('dev'));
 
 // Verificamos la conexión a la base de datos antes de iniciar el servidor
 db.sequelize.authenticate()
