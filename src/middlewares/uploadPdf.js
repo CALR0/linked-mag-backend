@@ -1,6 +1,5 @@
 const multer = require('multer');
 const path = require('path');
-const CurriculumVitaeService = require('./../services/curriculumVitaeService'); // Importa el servicio
 
 // Configuración de almacenamiento para multer
 const storage = multer.diskStorage({
@@ -13,30 +12,13 @@ const storage = multer.diskStorage({
   }
 });
 
-// Filtro para aceptar solo archivos PDF y verificar si el estudiante ya tiene un currículum
-const fileFilter = async (req, file, cb) => {
+// Filtro para aceptar solo archivos PDF
+const fileFilter = (req, file, cb) => {
   if (file.mimetype !== 'application/pdf') {
-    return cb(new Error('Solo se permiten archivos PDF'), false);
+    req.fileValidationError = 'Solo se permiten archivos PDF'; // Agregar mensaje de error a la solicitud
+    return cb(null, false); // No lanzar error 500, solo rechazar el archivo
   }
-
-  const studentId = req.body.studentId; // Obtenemos studentId del cuerpo de la solicitud
-
-  if (!studentId) {
-      return cb(new Error('studentId no proporcionado en la solicitud.'), false);
-  }
-
-  try {
-      const existingCurriculum = await CurriculumVitaeService.getCurriculumByStudentId(studentId);
-
-      if (existingCurriculum) {
-          return cb(new Error('El estudiante ya tiene un currículum subido. Por favor, elimínalo antes de subir uno nuevo.'), false);
-      }
-      cb(null, true);
-
-  } catch (error) {
-      console.error('Error en fileFilter al verificar currículum:', error);
-      cb(new Error('Error interno al verificar el currículum.'), false);
-  }
+  cb(null, true);
 };
 
 // Configuración de multer

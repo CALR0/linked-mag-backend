@@ -14,13 +14,9 @@ const OfferController = {
 
   async update(req, res) {
     const { id } = req.params;
-    const { applicants } = req.body;
 
     try {
-      const updatedOffer = await OfferService.updateOffer(id, {
-        ...req.body,
-        applicants: applicants ? applicants + 1 : undefined // Increment applicants if provided
-      });
+      const updatedOffer = await OfferService.updateOffer(id, req.body); // Cambiar directamente los valores
       return res.json(updatedOffer);
     } catch (error) {
       console.error(error);
