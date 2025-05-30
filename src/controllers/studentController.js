@@ -2,6 +2,7 @@ const StudentService = require('../services/studentService');
 const PostulationService = require('../services/postulationService');
 const bcrypt = require('bcrypt'); // para comparar password hasheado
 const jwt = require('jsonwebtoken');
+const { Postulation, Offer } = require('../models/index');
 
 const StudentController = {
 
@@ -144,22 +145,55 @@ const StudentController = {
   async getLastAppliedOffer(req, res) {
     const { id } = req.params;
     try {
-      const lastAppliedOffer = await PostulationService.getLastAppliedOffer(id);
-      return res.json(lastAppliedOffer);
+      const lastPostulation = await Postulation.findOne({
+        where: { studentId: id },
+        order: [['createdAt', 'DESC']],
+        include: {
+          model: Offer,
+          as: 'offer',
+          attributes: ['title', 'modality', 'closingDate', 'requirements', 'vacancies', 'applicants']
+        }
+      });
+
+      if (!lastPostulation || !lastPostulation.offer) {
+        return res.status(404).json({
+          success: false,
+          message: 'No se encontraron ofertas aplicadas para este estudiante'
+        });
+      }
+
+      const { offer } = lastPostulation;
+      res.json({
+        success: true,
+        data: {
+          title: offer.title,
+          category: offer.modality,
+          deadline: offer.closingDate,
+          requirements: offer.requirements,
+          vacancies: offer.vacancies,
+          applicants: offer.applicants
+        }
+      });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error al obtener la última oferta aplicada' });
+      console.error('Error in getLastAppliedOffer:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Error al obtener la última oferta aplicada',
+        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
     }
   },
 
   async getAppliedOffersCount(req, res) {
     const { id } = req.params;
     try {
-      const count = await PostulationService.getAppliedOffersCount(id);
-      return res.json({ count });
+      const count = await Postulation.count({
+        where: { studentId: id }
+      });
+
+      res.json({ count });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error al obtener el número de ofertas aplicadas' });
+      res.status(500).json({ error: 'Error al obtener el contador de ofertas aplicadas' });
     }
   },
 };

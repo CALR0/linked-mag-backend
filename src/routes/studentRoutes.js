@@ -1,24 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const { create, update, getByCode, getById, getAll, delete: deleteStudent, login, getStudentProfile, getLastAppliedOffer, getAppliedOffersCount } = require('../controllers/studentController');
+const StudentController = require('../controllers/studentController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.post('/', create);
+router.post('/', StudentController.create);
 
-router.put('/:studentCode', update);
+router.put('/:studentCode', StudentController.update);
 
-router.get('/id/:id', getById);
+router.get('/id/:id', StudentController.getById);
 
-router.get('/code/:studentCode', getByCode);
+router.get('/code/:studentCode', StudentController.getByCode);
 
-router.get('/', getAll);
+router.get('/', StudentController.getAll);
 
-router.delete('/:studentCode', deleteStudent);
+router.delete('/:studentCode', StudentController.delete);
 
-router.post('/login', login);
+router.post('/login', StudentController.login);
 
-router.get('/me', getStudentProfile);
-router.get('/:id/last-applied-offer', getLastAppliedOffer);
-router.get('/:id/applied-offers/count', getAppliedOffersCount);
+router.get('/me', authMiddleware, StudentController.getStudentProfile);
+
+router.get('/:id/last-applied-offer', StudentController.getLastAppliedOffer);
+
+router.get('/:id/applied-offers/count', StudentController.getAppliedOffersCount);
 
 module.exports = router;
 
