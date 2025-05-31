@@ -10,9 +10,13 @@ const PostulationService = {
       offerId
     });
 
+    // Solo permitir 'Abierta' o 'Cerrada'
+    let validStatus = 'Abierta';
+    if (status === 'Cerrada') validStatus = 'Cerrada';
+
     // Crear el estado inicial de la postulación
     await PostulationStatus.create({
-      status: status || 'Pendiente',
+      status: validStatus,
       postulationId: newPostulation.id
     });
 
@@ -31,8 +35,12 @@ const PostulationService = {
     await postulation.save();
 
     if (status) {
+      // Solo permitir 'Abierta' o 'Cerrada'
+      let validStatus = 'Abierta';
+      if (status === 'Cerrada') validStatus = 'Cerrada';
+
       const postulationStatus = await PostulationStatus.findOne({ where: { postulationId: id } });
-      postulationStatus.status = status;
+      postulationStatus.status = validStatus;
       await postulationStatus.save();
     }
 
@@ -88,10 +96,13 @@ const PostulationService = {
     const offer = lastPostulation.offer;
     return {
       title: offer.title,
-      category: offer.description, // Assuming description represents category
-      deadline: offer.closingDate,
-      vacancies: offer.vacancies, // Assuming vacancies exist
-      applicants: await Postulation.count({ where: { offerId: offer.id } })
+      category: offer.description, // Puedes ajustar si tienes un campo específico para categoría
+      deadline: offer.date, //Closing date
+      vacancies: offer.vacancies,
+      applicants: await Postulation.count({ where: { offerId: offer.id } }),
+      city: offer.city,
+      phone: offer.phone,
+      email: offer.email
     };
   },
 

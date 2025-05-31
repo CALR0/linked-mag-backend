@@ -151,7 +151,17 @@ const StudentController = {
         include: {
           model: Offer,
           as: 'offer',
-          attributes: ['title', 'modality', 'closingDate', 'requirements', 'vacancies', 'applicants']
+          attributes: [
+            'title',
+            'modality',
+            'date', // antes closingDate
+            'requirements',
+            'vacancies',
+            'applicants',
+            'city',
+            'phone',
+            'email'
+          ]
         }
       });
 
@@ -168,10 +178,13 @@ const StudentController = {
         data: {
           title: offer.title,
           category: offer.modality,
-          deadline: offer.closingDate,
+          deadline: offer.date, // antes closingDate
           requirements: offer.requirements,
           vacancies: offer.vacancies,
-          applicants: offer.applicants
+          applicants: offer.applicants,
+          city: offer.city,
+          phone: offer.phone,
+          email: offer.email
         }
       });
     } catch (error) {

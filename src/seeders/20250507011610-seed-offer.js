@@ -11,12 +11,13 @@ module.exports = {
           description: 'Se busca desarrollador con experiencia en Node.js y PostgreSQL.',
           modality: 'Presencial',
           companyId: 1,
-          location: 'Santa Marta',
+          city: 'Santa Marta',
           publicationDate: '2025-05-01',
-          closingDate: '2025-05-31',
-          phoneNumber: 3001234567,
+          date: '2025-05-31', //closingDate
+          phone: 3001234567,
+          email: 'backend@empresa.com',
           salary: 5000000,
-          requirements: ['Node.js', 'PostgreSQL', 'Git'], // Added requirements
+          requirements: ['Node.js', 'PostgreSQL', 'Git'],
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -25,12 +26,13 @@ module.exports = {
           description: 'Se busca diseñador UX/UI con experiencia en diseño de interfaces web.',
           modality: 'Remoto',
           companyId: 2,
-          location: 'Barranquilla',
+          city: 'Barranquilla',
           publicationDate: '2025-04-01',
-          closingDate: '2025-04-30',
-          phoneNumber: 3019876543,
+          date: '2025-04-30', //closingDate
+          phone: 3019876543,
+          email: 'uxui@empresa.com',
           salary: 4000000,
-          requirements: ['Figma', 'Adobe XD', 'HTML/CSS'], // Added requirements
+          requirements: ['Figma', 'Adobe XD', 'HTML/CSS'],
           createdAt: new Date(),
           updatedAt: new Date()
         }
@@ -41,9 +43,9 @@ module.exports = {
     const now = new Date();
     const offerStatuses = offers.map((offer) => {
       let status = 'Pendiente';
-      if (now >= new Date(offer.publicationDate) && now <= new Date(offer.closingDate)) {
+      if (now >= new Date(offer.publicationDate) && now <= new Date(offer.date)) {
         status = 'Abierta';
-      } else if (now > new Date(offer.closingDate)) {
+      } else if (now > new Date(offer.date)) {
         status = 'Cerrada';
       }
 

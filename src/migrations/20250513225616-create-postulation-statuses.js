@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
-          isIn: [['Pendiente', 'Aprobado', 'Rechazado']]
+          isIn: [['Abierta', 'Cerrada']]
         }
       },
       postulationId: {

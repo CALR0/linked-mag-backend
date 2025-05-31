@@ -31,7 +31,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      location: {
+      city: {
         type: Sequelize.STRING,
         allowNull: true
       },
@@ -39,12 +39,16 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      closingDate: {
+      date: { //closingDate
         type: Sequelize.DATE,
         allowNull: false
       },
-      phoneNumber: {
+      phone: {
         type: Sequelize.BIGINT,
+        allowNull: true
+      },
+      email: { // nuevo campo
+        type: Sequelize.STRING,
         allowNull: true
       },
       salary: {
@@ -54,6 +58,15 @@ module.exports = {
       requirements: {
         type: Sequelize.ARRAY(Sequelize.STRING), // Array of strings for requirements
         allowNull: true
+      },
+      vacancies: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      applicants: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

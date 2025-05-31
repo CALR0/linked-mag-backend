@@ -2,29 +2,30 @@ const { Offer, OfferStatus, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
-    const { title, description, modality, companyId, location, publicationDate, closingDate, phoneNumber, salary, requirements, vacancies } = data;
+    const { title, description, modality, companyId, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
 
     const newOffer = await Offer.create({
       title,
       description,
       modality,
       companyId,
-      location,
+      city,
       publicationDate,
-      closingDate,
-      phoneNumber,
+      date,
+      phone,
       salary,
-      requirements: Array.isArray(requirements) ? requirements : [], // Validar que sea un arreglo
+      requirements: Array.isArray(requirements) ? requirements : [],
       vacancies,
-      applicants: data.applicants || 0 // Nuevo campo con valor inicial
+      applicants: applicants || 0,
+      email
     });
 
     // Calcular el estado inicial de la oferta
     const now = new Date();
     let status = 'Pendiente';
-    if (now >= new Date(publicationDate) && now <= new Date(closingDate)) {
+    if (now >= new Date(publicationDate) && now <= new Date(date)) {
       status = 'Abierta';
-    } else if (now > new Date(closingDate)) {
+    } else if (now > new Date(date)) {
       status = 'Cerrada';
     }
 
@@ -38,7 +39,7 @@ const OfferService = {
   },
 
   async updateOffer(id, data) {
-    const { title, description, modality, location, publicationDate, closingDate, phoneNumber, salary, requirements, vacancies, applicants } = data;
+    const { title, description, modality, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
 
     const offer = await Offer.findByPk(id);
     if (!offer) {
@@ -48,23 +49,24 @@ const OfferService = {
     offer.title = title || offer.title;
     offer.description = description || offer.description;
     offer.modality = modality || offer.modality;
-    offer.location = location || offer.location;
+    offer.city = city || offer.city;
     offer.publicationDate = publicationDate || offer.publicationDate;
-    offer.closingDate = closingDate || offer.closingDate;
-    offer.phoneNumber = phoneNumber || offer.phoneNumber;
+    offer.date = date || offer.date;
+    offer.phone = phone || offer.phone;
     offer.salary = salary || offer.salary;
-    offer.requirements = Array.isArray(requirements) ? requirements : offer.requirements; // Validar que sea un arreglo
+    offer.requirements = Array.isArray(requirements) ? requirements : offer.requirements;
     offer.vacancies = vacancies || offer.vacancies;
     offer.applicants = applicants || offer.applicants;
+    offer.email = email || offer.email;
 
     await offer.save();
 
     // Actualizar el estado en función de las fechas
     const now = new Date();
     let status = 'Pendiente';
-    if (now >= new Date(offer.publicationDate) && now <= new Date(offer.closingDate)) {
+    if (now >= new Date(offer.publicationDate) && now <= new Date(offer.date)) {
       status = 'Abierta';
-    } else if (now > new Date(offer.closingDate)) {
+    } else if (now > new Date(offer.date)) {
       status = 'Cerrada';
     }
 

@@ -26,7 +26,7 @@ module.exports = {
 
     // Insertar estados de las postulaciones
     const postulationStatuses = postulations.map((postulation) => ({
-      status: 'Pendiente', // Estado inicial por defecto
+      status: 'Abierta', // Estado inicial por defecto
       postulationId: postulation.id,
       createdAt: new Date(),
       updatedAt: new Date()

@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    location: {
+    city: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -52,13 +52,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    closingDate: {
+    date: { //closingDate
       type: DataTypes.DATE,
       allowNull: false
     },
-    phoneNumber: {
+    phone: {
       type: DataTypes.BIGINT,
       allowNull: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isEmail: true
+      }
     },
     salary: {
       type: DataTypes.BIGINT,

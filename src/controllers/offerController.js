@@ -16,7 +16,7 @@ const OfferController = {
     const { id } = req.params;
 
     try {
-      const updatedOffer = await OfferService.updateOffer(id, req.body); // Cambiar directamente los valores
+      const updatedOffer = await OfferService.updateOffer(id, req.body);
       return res.json(updatedOffer);
     } catch (error) {
       console.error(error);
@@ -37,20 +37,22 @@ const OfferController = {
       }
 
       res.json({
-        id: offer._id,
+        id: offer.id,
         title: offer.title,
         description: offer.description,
         modality: offer.modality,
-        location: offer.location,
+        city: offer.city,
         publicationDate: offer.publicationDate,
-        closingDate: offer.closingDate,
+        date: offer.date,
         salary: new Intl.NumberFormat('es-CO', {
           style: 'currency',
           currency: 'COP',
           minimumFractionDigits: 2
         }).format(offer.salary),
-        companyName: offer.companyName,
-        status: offer.status
+        companyName: offer.company ? offer.company.name : null,
+        status: offer.status ? offer.status.status : null,
+        phone: offer.phone,
+        email: offer.email
       });
     } catch (error) {
       console.error(error);
@@ -62,20 +64,22 @@ const OfferController = {
     try {
       const offers = await OfferService.getAllOffers();
       return res.json(offers.map(offer => ({
-        id: offer._id,
+        id: offer.id,
         title: offer.title,
         description: offer.description,
         modality: offer.modality,
-        location: offer.location,
+        city: offer.city,
         publicationDate: offer.publicationDate,
-        closingDate: offer.closingDate,
+        date: offer.date,
         salary: new Intl.NumberFormat('es-CO', {
           style: 'currency',
           currency: 'COP',
           minimumFractionDigits: 2
         }).format(offer.salary),
-        companyName: offer.companyName,
-        status: offer.status
+        companyName: offer.company ? offer.company.name : null,
+        status: offer.status ? offer.status.status : null,
+        phone: offer.phone,
+        email: offer.email
       })));
     } catch (error) {
       console.error(error);
