@@ -1,0 +1,29 @@
+.avatar{
+    width: 110px;
+    height: 110px;
+}
+
+::ng-deep .custom-panel .p-panel-header,
+::ng-deep .custom-panel .p-panel-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+.number{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;   /* Equivalente a gap-2 de Tailwind (8px) */
+  width: 17.5rem; /* Equivalente a w-70 de Tailwind (280px) */
+  margin-top: 28px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}

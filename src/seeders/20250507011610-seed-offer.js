@@ -7,13 +7,13 @@ module.exports = {
       'offers',
       [
         {
-          title: 'Desarrollador Backend',
+          name: 'Desarrollador Backend',
           description: 'Se busca desarrollador con experiencia en Node.js y PostgreSQL.',
           modality: 'Presencial',
           companyId: 1,
           city: 'Santa Marta',
           publicationDate: '2025-05-01',
-          date: '2025-05-31', //closingDate
+          date: '2025-06-01',
           phone: 3001234567,
           email: 'backend@empresa.com',
           salary: 5000000,
@@ -22,13 +22,13 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          title: 'Diseñador UX/UI',
+          name: 'Diseñador UX/UI',
           description: 'Se busca diseñador UX/UI con experiencia en diseño de interfaces web.',
           modality: 'Remoto',
           companyId: 2,
           city: 'Barranquilla',
           publicationDate: '2025-04-01',
-          date: '2025-04-30', //closingDate
+          date: '2025-04-30',
           phone: 3019876543,
           email: 'uxui@empresa.com',
           salary: 4000000,

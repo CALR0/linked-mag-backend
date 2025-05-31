@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -39,7 +39,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      date: { //closingDate
+      date: {
         type: Sequelize.DATE,
         allowNull: false
       },
@@ -47,7 +47,7 @@ module.exports = {
         type: Sequelize.BIGINT,
         allowNull: true
       },
-      email: { // nuevo campo
+      email: {
         type: Sequelize.STRING,
         allowNull: true
       },
@@ -56,7 +56,7 @@ module.exports = {
         allowNull: true
       },
       requirements: {
-        type: Sequelize.ARRAY(Sequelize.STRING), // Array of strings for requirements
+        type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: true
       },
       vacancies: {

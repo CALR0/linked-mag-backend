@@ -1,0 +1,118 @@
+<app-company-sidebar></app-company-sidebar>
+<div class="flex-1 flex flex-col bg-gray-50 min-h-screen">
+  <header class="Nav-Bar">
+    <p-menubar>
+      <ng-template #start>
+        <h1 class="text-2xl font-bold text-gray-800 ml-70">Editar perfil</h1>
+      </ng-template>
+      <ng-template #end>
+        <div class="flex items-center gap-2">
+          <p-avatar [image]="profileImageUrl" shape="circle" size="large" />
+        </div>
+      </ng-template>
+    </p-menubar>
+  </header>
+
+  <main class="flex flex-col flex-1 gap-6 p-6">
+    <div class="flex-1">
+      <p-panel styleClass="custom-panel max-w-[800px] ml-75 bg-gray-100 border border-gray-300">
+        <div class="w-200 h-40 relative border-gray-300 rounded-lg">
+          <img [src]="bannerImageUrl" alt="Banner" class="w-200 h-40 object-cover" />
+          <label class="absolute top-2 right-2 cursor-pointer bg-white rounded-full p-2 shadow" title="Cambiar banner">
+            <i class="pi pi-pencil text-blue-600"></i>
+            <input type="file" accept="image/png, image/jpeg" hidden (change)="onBannerImageChange($event)" />
+          </label>
+
+          <div class="absolute left-8 bottom-[-40px] flex flex-col items-center">
+            <p-avatar
+              [image]="profileImageUrl"
+              shape="circle"
+              class="avatar"
+              styleClass="avatar border-4 border-white shadow mb-2"
+            ></p-avatar>
+            <label class="absolute bottom-2 right-[-7px] cursor-pointer bg-white rounded-full p-2 shadow" title="Cambiar logo">
+              <i class="pi pi-pencil text-blue-600"></i>
+              <input type="file" accept="image/png, image/jpeg" hidden (change)="onProfileImageChange($event)" />
+            </label>
+          </div>
+        </div>
+      </p-panel>
+
+      <div class="flex flex-wrap gap-6 ml-75 mt-12">
+        <div class="flex flex-col gap-2 w-60">
+          <label>Nombre de la empresa</label>
+          <input pInputText [(ngModel)]="companyProfile.name" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+          <label>Correo electrónico</label>
+          <input pInputText [(ngModel)]="companyProfile.email" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+          <label>Teléfono</label>
+          <input pInputText type="number" [(ngModel)]="companyProfile.phoneNumber" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+          <label>NIT</label>
+          <input pInputText [(ngModel)]="companyProfile.nit" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+          <label>Dirección</label>
+          <input pInputText [(ngModel)]="companyProfile.address" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+          <label>Departamento</label>
+          <p-dropdown
+            [(ngModel)]="companyProfile.department"
+            [options]="departments"
+            optionLabel="name"
+            placeholder="Selecciona departamento"
+          ></p-dropdown>
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+          <label>Ciudad</label>
+          <p-dropdown
+            [(ngModel)]="companyProfile.city"
+            [options]="capitalCities"
+            optionLabel="name"
+            placeholder="Selecciona ciudad"
+          ></p-dropdown>
+        </div>
+
+        <div class="flex flex-col gap-2 w-full mt-4">
+          <label>Descripción</label>
+          <textarea
+            pInputTextarea
+            rows="4"
+            [(ngModel)]="companyProfile.description"
+            class="w-full border border-gray-300 rounded-lg p-2"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex flex-col w-72 ml-75 mt-10">
+        <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="font-bold mb-2">Redes Sociales</h3>
+          <ul class="space-y-2">
+            <li *ngFor="let social of companyProfile.socialMedias" class="flex items-center gap-2">
+              <i class="pi text-xl" [ngClass]="social.icon"></i>
+              <a [href]="social.url" target="_blank" class="text-blue-600 hover:underline">
+                {{ social.name }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex flex-row gap-6 ml-75 mt-20 mb-20 items-center justify-center">
+        <p-button label="Volver" severity="danger" (onClick)="goToCompanyHome()"></p-button>
+        <p-button label="Guardar" severity="success" />
+      </div>
+    </div>
+  </main>
+</div>

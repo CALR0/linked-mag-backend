@@ -152,9 +152,9 @@ const StudentController = {
           model: Offer,
           as: 'offer',
           attributes: [
-            'title',
+            'name',
             'modality',
-            'date', // antes closingDate
+            'date',
             'requirements',
             'vacancies',
             'applicants',
@@ -176,9 +176,9 @@ const StudentController = {
       res.json({
         success: true,
         data: {
-          title: offer.title,
+          name: offer.name,
           category: offer.modality,
-          deadline: offer.date, // antes closingDate
+          deadline: offer.date,
           requirements: offer.requirements,
           vacancies: offer.vacancies,
           applicants: offer.applicants,

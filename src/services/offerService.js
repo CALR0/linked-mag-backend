@@ -2,10 +2,10 @@ const { Offer, OfferStatus, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
-    const { title, description, modality, companyId, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
+    const { name, description, modality, companyId, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
 
     const newOffer = await Offer.create({
-      title,
+      name,
       description,
       modality,
       companyId,
@@ -39,14 +39,14 @@ const OfferService = {
   },
 
   async updateOffer(id, data) {
-    const { title, description, modality, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
+    const { name, description, modality, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
 
     const offer = await Offer.findByPk(id);
     if (!offer) {
       throw new Error('Oferta no encontrada');
     }
 
-    offer.title = title || offer.title;
+    offer.name = name || offer.name;
     offer.description = description || offer.description;
     offer.modality = modality || offer.modality;
     offer.city = city || offer.city;

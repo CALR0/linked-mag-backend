@@ -1,0 +1,208 @@
+<app-nav-bar-home></app-nav-bar-home>
+<section class="first-section"></section>
+<link rel="stylesheet" href="https://primefaces.org/cdn/primeng/images/demo/flag/flags.css">
+
+<section class="login">
+    <div class="box-login">
+        <h2 class="text-2xl font-semibold text-gray-800 text-center mb-5">
+            Datos de la empresa
+        </h2>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <p-floatlabel variant="on">
+              <p-inputnumber
+                [(ngModel)]="NIT"
+                inputId="nit"
+                mode="decimal"
+                [useGrouping]="false"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="0"
+                class="custom-label"
+              />
+              <label for="nit">NIT</label>
+            </p-floatlabel>
+          
+            <p-floatlabel variant="on">
+                <input
+                  pInputText
+                  id="companyName"
+                  [(ngModel)]="nameCompany"
+                  class="input-highlight"
+                />
+                <label for="companyName">Nombre completo</label>
+              </p-floatlabel> 
+
+              <p-floatlabel variant="on">
+                <p-inputnumber
+                  [(ngModel)]="phoneNumber"
+                  inputId="phoneNumber"
+                  mode="decimal"
+                  [useGrouping]="false"
+                  [minFractionDigits]="0"
+                  [maxFractionDigits]="0"
+                  class="custom-label"
+                />
+                <label for="phoneNumber">Número telefónico</label>
+              </p-floatlabel>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 15px;">
+                <p-floatlabel variant="on">
+                <input
+                  pInputText
+                  id="companyName"
+                  [(ngModel)]="addressCompany"
+                  class="input-highlight input-uniform"
+                  style="border-radius: 5px; width: 230px; height: 40px; font-size: 16px; padding-left: 10px;"
+                />
+                <label for="companyName">Dirección</label>
+              </p-floatlabel> 
+              <p-floatlabel variant="on">
+                <input
+                  pInputText
+                  id="companyName"
+                  [(ngModel)]="pageWeb"
+                  class="input-highlight input-uniform"
+                  style="border-radius: 5px; width: 230px; height: 40px; font-size: 16px; padding-left: 10px;"
+                />
+                <label for="companyName">Página web</label>
+              </p-floatlabel> 
+              
+              <p-floatlabel variant="on">
+                <p-select [(ngModel)]="selectEconomicSector"  inputId="on_label" [options]="economicSector" optionLabel="name" class="economicSector input-uniform" />
+                <label for="on_label">Sector económico</label>
+              </p-floatlabel>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 15px;">
+            <p-floatlabel variant="on">
+              <p-select [(ngModel)]="selectTypeCompany"  inputId="on_label" [options]="typeCompany" optionLabel="name" class="input-highlight"/>
+              <label for="on_label">Tipo de empresa</label>
+            </p-floatlabel>
+
+            <p-select 
+                [options]="countries" 
+                [(ngModel)]="selectedCountry" 
+                optionLabel="name" 
+                [filter]="true" 
+                filterBy="name" 
+                [showClear]="true" 
+                placeholder="País de origen" 
+                class="input-highlight"
+                >
+                <ng-template #selectedItem let-selectedOption>
+                  <div class="flex items-center gap-2 input-uniform">
+                    <img 
+                      [src]="'https://flagcdn.com/w40/' + selectedOption.code.toLowerCase() + '.png'" 
+                      style="width: 18px" />
+                    <div>{{ selectedOption.name }}</div>
+                  </div>
+                </ng-template>
+                
+                <!-- Template para cada opción del dropdown -->
+                <ng-template let-country #item>
+                  <div class="flex items-center gap-2 input-uniform">
+                    <img 
+                      [src]="'https://flagcdn.com/w40/' + country.code.toLowerCase() + '.png'" 
+                      style="width: 18px" />
+                    <div>{{ country.name }}</div>
+                  </div>
+                </ng-template>
+          </p-select>
+
+          <p-fileupload mode="basic" name="demo[]" chooseIcon="pi pi-upload" 
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            accept="application/pdf" maxFileSize="1000000" (onUpload)="onUpload($event)" 
+            [auto]="true" [chooseLabel]="documentLabel" class="bottomUpload"/>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 15px;">
+
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                id="emailCompany"
+                [(ngModel)]="emailCompany"
+                class="input-highlight" 
+              />
+              <label for="emailCompany">Correo electrónico</label>
+            </p-floatlabel> 
+
+            <p-floatlabel variant="on" class="input-uniform">
+              <p-password [(ngModel)]="password" inputId="on_label" class="custom-label" [toggleMask]="true" />
+              <label for="on_label">Contraseña</label>
+            </p-floatlabel>
+            
+            <p-floatlabel variant="on" class="margin-form input-uniform">
+              <p-password [(ngModel)]="confirmPassword" inputId="on_label" class="custom-label" [toggleMask]="true" />
+              <label for="on_label">Confirmar contraseña</label>
+            </p-floatlabel>
+            
+          </div>
+
+          <div style="display: flex; gap: 20px; align-items: center; margin-top: 15px;">
+            <p-fileupload mode="basic" name="demo[]" chooseIcon="pi pi-upload" 
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            accept="application/pdf" maxFileSize="1000000" (onUpload)="onUploadApprovalLicense($event)" 
+            [auto]="true" [chooseLabel]="documentApprovalLicense" class="bottomUpload"/>
+          </div>
+
+          <h3 class="text-2xl font-semibold text-gray-800 text-center mb-3 mt-3">
+            Datos del representante legal
+          </h3>
+        
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 3px;">
+            
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                id="nameComplete"
+                [(ngModel)]="nameComplete"
+                class="input-highlight"
+                
+              />
+              <label for="nameComplete">Nombres</label>
+            </p-floatlabel> 
+
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                id="lastName"
+                [(ngModel)]="lastName"
+                class="input-highlight"
+              />
+              <label for="lastName">Apellidos</label>
+            </p-floatlabel> 
+            <p-floatlabel variant="on">
+              <p-inputnumber
+                [(ngModel)]="phoneNumberContact"
+                inputId="nit"
+                mode="decimal"
+                [useGrouping]="false"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="0"
+                class="custom-label"
+              />
+              <label for="nit">Número de contacto</label>
+            </p-floatlabel> 
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+            <p-fileupload mode="basic" name="demo[]" chooseIcon="pi pi-upload" 
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            accept="application/pdf" maxFileSize="1000000" (onUpload)="onUploadIdDocument($event)" 
+            [auto]="true" [chooseLabel]="displayedIdDocumentName" class="bottomUpload"/>
+            <p-fileupload mode="basic" name="demo[]" chooseIcon="pi pi-upload" 
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            accept="application/pdf" maxFileSize="1000000" (onUpload)="onUploadIdDocument($event)" 
+            [auto]="true" [chooseLabel]="displayedJobCertificateName" class="onUploadJobCertificate"/>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 20px;">
+            <button type="button" class="btn-register" (click)="validarFormulario()">Registrate</button>
+          </div>
+
+    </div>
+</section> 
+
+
+ 

@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Offer.init({
-    title: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    date: { //closingDate
+    date: {
       type: DataTypes.DATE,
       allowNull: false
     },
@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     requirements: {
-      type: DataTypes.ARRAY(DataTypes.STRING), // Array of strings for requirements
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true
     },
     vacancies: {
@@ -82,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
     applicants: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: 0 // Default to 0 applicants
+      defaultValue: 0
     }
   }, {
     sequelize,

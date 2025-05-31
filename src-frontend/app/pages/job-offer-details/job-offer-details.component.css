@@ -1,0 +1,125 @@
+.main-content {
+  margin-left: 250px; /* o el ancho exacto de tu sidebar */
+  padding: 20px;
+}
+
+.detail-box {
+  background-color: #f9f9f9;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+
+.status-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.approved {
+    background-color: #e6f7ee;
+    color: #0f9d58;
+    border: 1px solid #c1e8d1;
+}
+
+.pending {
+    background-color: #fff4e6;
+    color: #ff8c00;
+    border: 1px solid #ffd8b3;
+}
+
+.rejected {
+    background-color: #ffebee;
+    color: #f44336;
+    border: 1px solid #ffcdd2;
+}
+
+/* Estilo para el botón de lápiz */
+.p-button-rounded.p-button-text.p-button-secondary {
+    color: #6c757d;
+    transition: all 0.3s;
+}
+
+.p-button-rounded.p-button-text.p-button-secondary:hover {
+    color: #5a6268;
+    background-color: rgba(108, 117, 125, 0.1);
+}
+
+.job-offer-summary {
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1f2937;
+}
+
+.columns-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.column.description {
+  flex: 2 1 100%;
+}
+
+.item .label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem;
+}
+
+.item .value {
+  font-size: 1rem;
+  color: #111827;
+  margin: 0;
+}
+
+.status.abierta {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.description .value {
+  color: #374151;
+  line-height: 1.5;
+}
+
+.ver-mas {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-weight: 500;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.ver-mas:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para las columnas más compactas */
+.compact-details .detail-box {
+  padding: 6px 10px;
+}
+
+.compact-details .flex-col {
+  gap: 4px;
+}
+
+.compact-details .text-sm {
+  font-size: 0.75rem; /* Hacer los labels un poco más pequeños */
+}

@@ -1,0 +1,89 @@
+.footer {
+  background: linear-gradient(to bottom, #474af7, #1e3a8a);
+  color: #f8fafc;
+  padding: 40px 20px 30px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  text-align: left;
+}
+
+.footer-column {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+.footer-column h4 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #bfdbfe;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-column a {
+  text-decoration: none;
+  color: #dbeafe;
+  transition: color 0.3s;
+}
+
+.footer-column a:hover {
+  color: #ffffff;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  background-color: #2563eb;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.4rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.1);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  border-top: 1px solid #3b82f6;
+  padding-top: 15px;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}

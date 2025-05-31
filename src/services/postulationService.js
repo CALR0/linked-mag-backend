@@ -95,9 +95,9 @@ const PostulationService = {
 
     const offer = lastPostulation.offer;
     return {
-      title: offer.title,
+      name: offer.name,
       category: offer.description, // Puedes ajustar si tienes un campo específico para categoría
-      deadline: offer.date, //Closing date
+      deadline: offer.date,
       vacancies: offer.vacancies,
       applicants: await Postulation.count({ where: { offerId: offer.id } }),
       city: offer.city,

@@ -38,7 +38,7 @@ const OfferController = {
 
       res.json({
         id: offer.id,
-        title: offer.title,
+        name: offer.name,
         description: offer.description,
         modality: offer.modality,
         city: offer.city,
@@ -65,7 +65,7 @@ const OfferController = {
       const offers = await OfferService.getAllOffers();
       return res.json(offers.map(offer => ({
         id: offer.id,
-        title: offer.title,
+        name: offer.name, // cambiado de title a name
         description: offer.description,
         modality: offer.modality,
         city: offer.city,

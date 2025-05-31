@@ -1,0 +1,25 @@
+.card {
+  width: 250px;
+  padding: 24px;
+  border-radius: 16px;
+  background: #6366f1;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  font-family: 'Inter', sans-serif;
+  display: flex-column;
+  margin-left: 20%;
+  margin-top: 30px;
+}
+.card h2 {
+  margin-top: 0;
+}
+.card button {
+  margin-top: 16px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #6366f1;
+  font-weight: bold;
+  cursor: pointer;
+}

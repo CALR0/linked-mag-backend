@@ -1,0 +1,26 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    color: white;
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    top: 0;
+  }
+  
+  .navbar-actions{
+    margin-right: 30px;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .btn-register ::ng-deep .p-button-label{
+      font-weight: 700;
+  }
+  
+  .navbar-logo {
+    height: 60px;
+  }
+  

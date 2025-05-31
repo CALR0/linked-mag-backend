@@ -1,0 +1,36 @@
+<p-drawer #drawerRef [(visible)]="visible" position="left" modal="false" dismissable="false" [style]="{ width: '250px' }">
+    <ng-template #headless>
+        <div class="flex flex-col h-full bg-white text-gray-600 shadow-lg">
+            <div class="flex items-center justify-start px-6 py-4">
+                <div class="logo-linkedmag" class="flex items-center justify-start px-3 pt-3">
+                    <img src="assets/logo-recortado-morado.png" alt="Logo LinkedMag">
+                </div>
+            </div>
+            <ul class="list-none p-4 m-0">
+                <li>
+                        <a
+                            routerLink="/panel/university/validate-registration"
+                            routerLinkActive="bg-[#6366f1] text-white"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            class="flex items-center p-4 rounded text-gray-600 hover:bg-[#6366f1] hover:text-white transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-md"
+                        >
+                            <i class="pi pi-home mr-3"></i>
+                            <span>Registro estudiantes</span>
+                        </a>
+                </li>
+
+                <li>
+                        <a
+                            routerLink="/panel/university/validate-registration-company"
+                            routerLinkActive="bg-[#6366f1] text-white"
+                            [routerLinkActiveOptions]="{ exact: true }"
+                            class="flex items-center p-4 rounded text-gray-600 hover:bg-[#6366f1] hover:text-white transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-md"
+                        >
+                            <i class="pi pi-briefcase mr-3"></i>
+                            <span>Registro empresas</span>
+                        </a>
+                </li>
+            </ul>
+        </div>
+    </ng-template>
+</p-drawer>

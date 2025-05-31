@@ -1,0 +1,359 @@
+<app-sidebar-student></app-sidebar-student>
+<div class="flex-1 flex flex-col bg-gray-50 min-h-screen">
+<header class="Nav-Bar">
+            <p-menubar>
+                <ng-template #start>
+                    <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="..." fill="var(--primary-color)" />
+                    </svg>
+                    <h1 class="text-2xl font-inter font-bold text-gray-800 tracking-wide ml-70">
+                       Editar perfil
+                    </h1>
+                </ng-template>
+                <ng-template #end>
+                    <div class="flex items-center gap-2">
+                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" size="large" />
+                    </div>
+                </ng-template>
+            </p-menubar>
+        </header>
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="flex flex-col flex-1 gap-6 p-6">
+            <div class="flex gap-4">
+    <!-- Banner y avatar (izquierda, ocupa la mayor parte) -->
+    <div class="flex-1">
+        <p-panel styleClass=" custom-panel max-w-[800px] ml-75 bg-gray-100 border border-gray-300">
+     <!-- Imagen secundaria editable (esquina superior derecha) -->
+    <!-- Banner editable -->
+    <div class="w-200 h-40 relative border-gray-300 rounded-lg">
+        <img
+            [src]="bannerImageUrl"
+            alt="Banner"
+            class="w-200 h-40 object-cover object-left"
+        />
+        <!-- Botón para cambiar banner -->
+        <label class="absolute top-2 right-2 cursor-pointer bg-white rounded-full p-2 shadow" title="Cambiar banner">
+            <i class="pi pi-pencil text-blue-600"></i>
+            <input type="file" accept="image/png, image/jpeg" hidden (change)="onBannerImageChange($event)" />
+        </label>
+    <div class="absolute left-8 bottom-[-40px] flex flex-col items-center">
+            <p-avatar 
+                [image]="profileImageUrl" 
+                shape="circle"
+                class="avatar"
+                styleClass="avatar border-4 border-white shadow mb-2"
+            ></p-avatar>
+            <!-- Botón para cambiar foto -->
+            <label class="absolute bottom-2 right-[-7px] cursor-pointer bg-white rounded-full p-2 shadow" title="Cambiar foto">
+                <i class="pi pi-pencil text-blue-600"></i>
+                <input type="file" accept="image/png, image/jpeg" hidden (change)="onProfileImageChange($event)" />
+            </label>
+        </div>
+      </div>  
+</p-panel>
+    <div class="flex flex-row gap-6 ml-75 mt-12">
+        <div class="flex flex-col gap-2 w-60">  <!-- first line form edit profile -->
+            <label for="name">Nombres</label>
+            <input pInputText id="name" aria-describedby="name-help" [(ngModel)]="studentProfile.name" />
+        </div>
+        <div class="flex flex-col gap-2 w-60">
+            <label for="lastName">Apellidos</label>
+            <input pInputText id="lastName" aria-describedby="lastName-help" [(ngModel)]="studentProfile.lastName" />
+        </div>
+        <div class="flex flex-col gap-2 w-60">
+            <label for="">Correo electrónico</label>
+            <input pInputText id="email" aria-describedby="lastName-help" [(ngModel)]="studentProfile.email" />
+        </div>
+    </div>
+    <div class="flex flex-row gap-6 ml-75 mt-3">
+        
+            <div class="flex flex-col gap-2 w-60">
+                <label for="">Número telefonico</label>
+                <input type="number" pInputText id="phoneNumber"aria-describedby="lastName-help" [(ngModel)]="studentProfile.phoneNumber"/>
+            </div>
+
+            <div class="flex flex-col gap-2 w-60">
+                <label for="">Código estudiantil</label>
+                <input type="number" pInputText id="studentCode" aria-describedby="lastName-help" [(ngModel)]="studentProfile.studentCode"/>
+            </div>
+
+        <div class="flex flex-col gap-2 w-60">
+            <label for="">C.C.</label>
+            <input type="number" pInputText id="citizenshipcard" aria-describedby="lastName-help" [(ngModel)]="studentProfile.citizenshipcard"/>
+        </div>
+
+    </div>
+
+    <div class="flex flex-row gap-6 ml-75 mt-3">
+        <div class="flex flex-col gap-2 w-60">
+            <label for="birthdate">Fecha de nacimiento</label>
+            <input
+                type="date"
+                pInputText
+                id="birthdate"
+                aria-describedby="birthdate-help"
+                [(ngModel)]="studentProfile.birthdate"
+                class="w-60"
+            />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+            <label for="">Dirección</label>
+            <input pInputText id="Dirección" aria-describedby="lastName-help" [(ngModel)]="studentProfile.adrress" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-60">
+            <label for="">Programa académico</label>
+            <p-floatlabel variant="on" class="margin-list">
+                
+                    <p-dropdown
+                        [(ngModel)]="studentProfile.selectProgram"
+                        inputId="on_label"
+                        [options]="academicPrograms"
+                        optionLabel="name"
+                        class="w-60"
+                        placeholder={{studentProfile.selectProgram[0].name}}
+                    ></p-dropdown>
+            </p-floatlabel>
+        </div> 
+    </div>
+
+    <div class="flex flex-row gap-6 ml-75 mt-3">
+        <div class="flex flex-col gap-2 w-80">
+            <label for="">Departamento</label>
+            <p-floatlabel variant="on" class="margin-list">
+                
+                    <p-dropdown
+                        [(ngModel)]="studentProfile.department"
+                        inputId="on_label"
+                        [options]="departments"
+                        optionLabel="name"
+                        class="w-85"
+                        placeholder={{studentProfile.department}}
+                    ></p-dropdown>
+            </p-floatlabel>
+        </div> 
+        <div class="flex flex-col ml-20 w-90 mt-2">
+            <label for="">Ciudad</label>
+            <p-floatlabel variant="on" class="margin-list">
+                
+                    <p-dropdown
+                        [(ngModel)]="studentProfile.city"
+                        inputId="on_label"
+                        [options]="capitalCities"
+                        optionLabel="name"
+                        class="w-87"
+                        placeholder={{studentProfile.city}}
+                    ></p-dropdown>
+            </p-floatlabel>
+        </div>
+        
+    </div>
+
+<div class="flex flex-row gap-6 ml-75 mt-10 items-center">
+    <label for="habilidades" class="text-2xl font-semibold flex items-center gap-2">
+        Habilidades
+        <i class="pi pi-pencil text-blue-600 cursor-pointer ml-2"
+           (click)="showSkillsDialog = true"></i>
+    </label>
+</div>
+
+<p-dialog
+  header="Seleccionar habilidades"
+  [(visible)]="showSkillsDialog"
+  [modal]="true"
+  [style]="{width: '500px', height: '400px'}"
+  [closable]="true"
+>
+  <!-- Aquí puedes poner tu selector de habilidades, por ejemplo un p-multiSelect -->
+  <p-multiSelect 
+    [options]="technologyOptions"
+    [(ngModel)]="userSkills"
+    optionLabel="name"
+    display="chip"
+    placeholder="Selecciona tus habilidades"
+    class="w-full">
+    <ng-template let-option pTemplate="item">
+      <img [src]="option.logo" width="20" height="20" style="margin-right: 8px;" />
+      {{ option.name }}
+    </ng-template>
+  </p-multiSelect>
+  <div class="absolute right-6 bottom-6">
+    <p-button  label="Aceptar" variant="text" severity="success"  (onClick)="showSkillsDialog = false"></p-button>
+  </div>
+  
+</p-dialog>
+
+<!-- Mostrar las tecnologías seleccionadas -->
+<div class="flex flex-wrap gap-2 flex flex-row gap-6 ml-75 mt-10 items-center">
+  <ng-container *ngFor="let skill of userSkills">
+    <img [src]="skill.logo" [alt]="skill.name" width="40" height="40" title="{{skill.name}}" />
+  </ng-container>
+</div>
+
+
+    <div class="flex flex-row gap-6 ml-75 mt-10 items-center">
+        <label for="experience" class="text-2xl font-semibold flex items-center gap-2">
+            Experiencia Laboral
+            <i class="pi pi-pencil text-blue-600 cursor-pointer ml-2"
+            (click)="showExperienceDialog = true"></i>
+        </label>
+    </div>
+
+    <p-dialog
+        header="Cuentanos tus experiencias"
+        [(visible)]="showExperienceDialog"
+        [modal]="true"
+        [style]="{width: '800px', height: '530px'}"
+        [closable]="true"
+        >
+        <div>
+                <label for="nameCompany" class="block font-semibold mb-2">Nombre de la empresa en la que trabajaste</label>
+                <textarea
+                id="nameCompany"
+                pInputTextarea
+                [(ngModel)]="nameCompany"
+                maxlength="1000"
+                rows="6"
+                class="w-full max-h-11 min-h-11 border border-gray-300 rounded-lg p-2 resize-y"
+                ></textarea>
+                <div class="text-right text-xs text-gray-500 mt-1">
+                {{ nameCompany.length || 0 }}/100 caracteres
+                </div>
+        </div>
+        <div>
+                <label for="descriptionOfYourWork" class="block font-semibold mb-2">¿Cuál fue tu rol en la empresa?</label>
+                <textarea
+                id="descriptionOfYourWork"
+                pInputTextarea
+                [(ngModel)]="descriptionOfYourWork"
+                maxlength="1000"
+                rows="6"
+                class="w-full max-h-25 min-h-11 border border-gray-300 rounded-lg p-2"
+                ></textarea>
+                <div class="text-right text-xs text-gray-500 mt-1">
+                {{ descriptionOfYourWork?.length || 0 }}/500 caracteres
+                </div>
+        </div>
+        <div class="flex flex-row gap-4 mt-2">
+        <div>
+            <label for="startDate" class="mr-2">Fecha de inicio</label>
+            <input
+                type="date"
+                pInputText
+                id="startDate"
+                aria-describedby="startDate-help"
+                [(ngModel)]="startDate"
+                class="w-60"
+            />
+        </div>
+        <div>
+            <label for="endDate" class="mr-2">Fecha de fin</label>
+            <input
+                type="date"
+                pInputText
+                id="endDate"
+                aria-describedby="endDate-help"
+                [(ngModel)]="endDate"
+                class="w-60"
+            />
+        </div>
+    </div>
+    <div class="flex flex-col gap-2 mt-8">
+        <p-fileupload 
+            mode="basic" 
+            name="demo[]" 
+            chooseIcon="pi pi-upload"
+            url="https://www.primefaces.org/cdn/api/upload.php"
+            accept="image/png"
+            maxFileSize="1000000"
+            (onUpload)="onUpload($event)"
+            [auto]="true"
+            [chooseLabel]="documentLabel"
+            class="bottomUpload"
+        />
+    </div>
+    
+
+        <div class="absolute right-6 bottom-6">
+            <p-button  
+                label="Aceptar" 
+                variant="text" 
+                severity="success"  
+                (onClick)="onAcceptExperience()">
+            </p-button>
+        </div>
+    </p-dialog>
+
+    <div *ngFor="let exp of experiences" class="flex flex-row gap-6 ml-75 mt-10 items-center">
+        <h3 class="font-bold text-lg mb-2">Experiencia registrada</h3>
+        <div class="mb-2">
+            <span class="font-semibold">Empresa:</span> {{ exp.nameCompany }}
+        </div>
+        <div class="mb-2">
+            <span class="font-semibold">Rol:</span> {{ exp.descriptionOfYourWork }}
+        </div>
+        <div class="mb-2">
+            <span class="font-semibold">Fecha de inicio:</span> {{ exp.startDate }}
+        </div>
+        <div>
+            <span class="font-semibold">Fecha de fin:</span> {{ exp.endDate }}
+        </div>
+    </div>
+
+
+    <div class="flex flex-row gap-6 ml-75 mt-20 mb-20 items-center justify-center">
+            <p-fileupload mode="basic" name="demo[]" chooseIcon="pi pi-upload" 
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            accept="application/pdf" maxFileSize="1000000" (onUpload)="onUploadApprovalLicense($event)" 
+            [auto]="true" [chooseLabel]="documentCV" class="bottomUpload"/>
+    </div>
+
+    <div class="flex flex-row gap-6 ml-75 mt-20 mb-20 items-center justify-center">
+       <p-button label="Volver" severity="danger" (onClick)="goToStudentHome()"></p-button>
+        <p-button label="Guardar" severity="success"/>
+    </div>
+
+    
+    
+    </div>
+
+
+
+    <div class="w-72 flex-col gap-4">
+        <!-- Redes sociales -->
+        <div class="bg-white rounded-lg shadow p-4">
+    <h3 class="font-bold mb-2">Socials</h3>
+    <ul class="space-y-2">
+        <li *ngFor="let social of studentProfile.socialMedias" class="flex items-center gap-2">
+            <i class="pi text-xl" [ngClass]="social.icon"></i>
+            <a [href]="social.url" target="_blank" class="text-blue-600 hover:underline">
+                {{ social.name }}
+            </a>
+        </li>
+    </ul>
+</div>
+        <!-- Idiomas -->
+        <div class="bg-white rounded-lg shadow p-4">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+            <h3 class="font-bold mb-2">Idiomas</h3>
+            <ul class="space-y-2">
+                <li *ngFor="let idioma of studentProfile.languages" class="flex items-center gap-2">
+                    <span class="fi" [ngClass]="'fi-' + idioma.codigo"></span>
+                    <span>{{ idioma.nombre }} ({{ idioma.nivel }})</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+</main>
+
+
+</div>
+
+

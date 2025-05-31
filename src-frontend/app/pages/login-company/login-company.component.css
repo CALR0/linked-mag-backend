@@ -1,0 +1,86 @@
+.first-section{
+    background: linear-gradient(to bottom, #6366f1, #1e3a8a);
+    color: white;
+    text-align: center;
+    padding: 160px 20px 100px;
+    width: 100%;
+    height: 50vh;
+}
+
+.login {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+.custom-label ::ng-deep input {
+    width: 400px; 
+    margin-left:15px;
+    height: 50px;
+    border: 1px solid rgba(108, 122, 127, 0.4); 
+    border-radius: 4px;
+}
+
+
+
+
+
+.box-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* contenido alineado al inicio */
+    
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2.5rem; /* Cambiado de 1rem a 2rem para más padding interno */
+  
+    border-radius: 40px;
+    background-color: white;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  
+    box-sizing: border-box;
+  }
+
+  .user-box{
+    margin-left: 50px;
+    margin-top: 10px;
+  }
+
+  .btn-login {
+    background-color: #7c3aed;
+    margin-top: 30px;
+    color: white;
+    padding: 15px 30px; /* Cambiado de solo 15px a 15px 30px para más padding horizontal */
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-login:hover {
+    background-color: #460d80;
+    box-shadow: 0 0 15px #9f6dff, 0 0 30px rgba(124, 58, 237, 0.4);
+}
+
+::ng-deep .password-box .p-inputtext {
+  height: 50px;
+  width: 400px;
+  border: 1px solid #ced4da !important;
+  border-radius: 4px;
+  padding-left: 10px;
+  margin-left: 150px;
+}
+
+::ng-deep .user-box input::placeholder {
+  color:#6c7a89;
+}

@@ -1,0 +1,95 @@
+<app-sidebar-university></app-sidebar-university>
+<div class="flex-1 flex flex-col bg-gray-50 min-h-screen ml-60">
+<header class="Nav-Bar">
+            <p-menubar>
+                <ng-template #start>
+                    <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="..." fill="var(--primary-color)" />
+                    </svg>
+                    <h1 class="text-2xl font-inter font-bold text-gray-800 tracking-wide">
+                       Validar registro
+                    </h1>
+                </ng-template>
+                <ng-template #end>
+                    <div class="flex items-center gap-2">
+                        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" shape="circle" size="large" />
+                    </div>
+                </ng-template>
+            </p-menubar>
+        </header>
+
+         <p-table 
+    #dt1 
+    [value]="applications" 
+    dataKey="id" 
+    [rows]="10" 
+    [rowsPerPageOptions]="[10, 25, 50]" 
+    [loading]="loading" 
+    [paginator]="true" 
+    [globalFilterFields]="['name', 'modality', 'location', 'availableUntil', 'status']"
+>        
+    <ng-template #header>
+        <tr>
+            <th style="min-width:15rem; padding-left:5rem;">
+                <div class="flex items-center">
+                    Empresa
+                    <p-columnFilter type="text" field="name" display="menu" />
+                </div>
+            </th>
+            <th style="min-width:10rem">
+                <div class="flex items-center">
+                    NIT
+                    <p-columnFilter type="text" field="modality" display="menu" />
+                </div>
+            </th>
+            <th style="min-width:10rem">
+                <div class="flex items-center">
+                    Fecha
+                    <p-columnFilter type="text" field="location" display="menu" />
+                </div>
+            </th>
+            <th style="min-width:12rem">
+                <div class="flex items-center">
+                    Correo
+                    <p-columnFilter type="date" field="date" display="menu" />
+                </div>
+            </th>
+            <th style="min-width:10rem">
+                <div class="flex items-center">
+
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+        <tr>
+            <td colspan="5">No se encontraron registros.</td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+        <tr>
+            <td style="padding-left:5rem;">
+                {{ rowData.nameCompany }}
+            </td>
+            <td>
+                {{ rowData.NIT }}
+            </td>
+            <td>
+                {{ rowData.date | date:'MMM dd, yyyy hh:mm a' }}
+            </td>
+            <td>
+                {{ rowData.email }}
+            </td>
+            
+            <td>
+                 <ng-container [ngSwitch]="rowData.status">
+                    <app-university-validate-see-company></app-university-validate-see-company>
+                </ng-container>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+</div>
