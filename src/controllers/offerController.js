@@ -3,6 +3,8 @@ const OfferService = require('../services/offerService');
 const OfferController = {
 
   async create(req, res) {
+    console.log('Entró al controlador de crear oferta');
+    console.log('Datos recibidos en el backend:', req.body); // docker-compose logs backend
     try {
       const offer = await OfferService.createOffer(req.body);
       return res.status(201).json(offer);

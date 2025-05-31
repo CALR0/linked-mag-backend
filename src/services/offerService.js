@@ -2,7 +2,28 @@ const { Offer, OfferStatus, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
-    const { name, description, modality, companyId, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
+    let {
+      name,
+      description,
+      modality,
+      companyId,
+      city,
+      publicationDate,
+      date,
+      phone,
+      salary,
+      requirements,
+      vacancies,
+      applicants,
+      email
+    } = data;
+
+    // Asignar fechas por defecto si no vienen en el body
+    const now = new Date();
+    if (!publicationDate) publicationDate = now;
+    if (!date) date = now;
+    const createdAt = now;
+    const updatedAt = now;
 
     const newOffer = await Offer.create({
       name,
@@ -17,11 +38,12 @@ const OfferService = {
       requirements: Array.isArray(requirements) ? requirements : [],
       vacancies,
       applicants: applicants || 0,
-      email
+      email,
+      createdAt,
+      updatedAt
     });
 
     // Calcular el estado inicial de la oferta
-    const now = new Date();
     let status = 'Pendiente';
     if (now >= new Date(publicationDate) && now <= new Date(date)) {
       status = 'Abierta';
