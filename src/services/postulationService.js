@@ -10,9 +10,10 @@ const PostulationService = {
       offerId
     });
 
-    // Solo permitir 'Abierta' o 'Cerrada'
-    let validStatus = 'Abierta';
-    if (status === 'Cerrada') validStatus = 'Cerrada';
+    // Solo permitir 'Aceptada', 'Rechazada', 'Pendiente'
+    let validStatus = 'Pendiente';
+    if (status === 'Aceptada') validStatus = 'Aceptada';
+    if (status === 'Rechazada') validStatus = 'Rechazada';
 
     // Crear el estado inicial de la postulación
     await PostulationStatus.create({
@@ -35,9 +36,10 @@ const PostulationService = {
     await postulation.save();
 
     if (status) {
-      // Solo permitir 'Abierta' o 'Cerrada'
-      let validStatus = 'Abierta';
-      if (status === 'Cerrada') validStatus = 'Cerrada';
+      // Solo permitir 'Aceptada', 'Rechazada', 'Pendiente'
+      let validStatus = 'Pendiente';
+      if (status === 'Aceptada') validStatus = 'Aceptada';
+      if (status === 'Rechazada') validStatus = 'Rechazada';
 
       const postulationStatus = await PostulationStatus.findOne({ where: { postulationId: id } });
       postulationStatus.status = validStatus;
