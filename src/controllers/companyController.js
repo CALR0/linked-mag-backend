@@ -1,4 +1,6 @@
 const CompanyService = require('../services/companyService');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const CompanyController = {
  
@@ -65,6 +67,36 @@ const CompanyController = {
         return res.status(404).json({ message: error.message });
       }
       return res.status(500).json({ message: 'Error al eliminar la empresa' });
+    }
+  },
+
+  async login(req, res) {
+    const { nitCode, password } = req.body;
+    try {
+      const company = await CompanyService.findCompanyByNitCode(nitCode);
+
+      if (!company) {
+        return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+
+      const validPassword = await bcrypt.compare(password, company.password);
+      if (!validPassword) {
+        return res.status(401).json({ message: 'Credenciales inválidas' });
+      }
+
+      const token = jwt.sign({ id: company.id, nitCode: company.nitCode }, process.env.JWT_SECRET || 'secreto', {
+        expiresIn: '1h',
+      });
+
+      const { password: _, ...companyWithoutPassword } = company.toJSON();
+
+      return res.json({
+        token,
+        company: companyWithoutPassword
+      });
+    } catch (error) {
+      console.error('Error en login:', error);
+      return res.status(500).json({ message: 'Error interno del servidor' });
     }
   },
 };
