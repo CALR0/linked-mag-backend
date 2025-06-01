@@ -33,11 +33,16 @@ const CompanyService = {
     return updatedCompany;
   },
 
-  async getCompanyByNitCode(nitCode) {
+  async findCompanyByNitCode(nitCode) {
     const company = await Company.findOne({ where: { nitCode } });
     if (!company) {
       throw new Error('Empresa no encontrada');
     }
+    return company; // Includes password, only for login
+  },
+
+  async getCompanyByNitCode(nitCode) {
+    const company = await this.findCompanyByNitCode(nitCode);
     const { password: _, ...companyWithoutPassword } = company.toJSON();
     return companyWithoutPassword;
   },

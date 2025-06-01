@@ -12,4 +12,6 @@ router.get('/', CompanyController.readAll);
 
 router.delete('/:nitCode', CompanyController.delete);
 
+router.post('/login', CompanyController.login);
+
 module.exports = router;
