@@ -6,7 +6,17 @@ const CompanyController = {
  
   async create(req, res) {
     try {
-      const company = await CompanyService.createCompany(req.body);
+      const companyData = {
+        nameCompany: req.body.nameCompany,
+        emailCompany: req.body.emailCompany,
+        phoneCompany: req.body.phoneCompany,
+        NIT: req.body.NIT,
+        password: req.body.password,
+        selectTypeCompany: req.body.selectTypeCompany,
+        selectEconomicSector: req.body.selectEconomicSector,
+      };
+
+      const company = await CompanyService.createCompany(companyData);
       return res.status(201).json(company);
     } catch (error) {
       console.error(error);
@@ -15,10 +25,10 @@ const CompanyController = {
   },
 
   async update(req, res) {
-    const { nitCode } = req.params;
+    const { NIT } = req.params;
 
     try {
-      const updatedCompany = await CompanyService.updateCompany(nitCode, req.body);
+      const updatedCompany = await CompanyService.updateCompany(NIT, req.body);
       return res.json(updatedCompany);
     } catch (error) {
       console.error(error);
@@ -29,12 +39,11 @@ const CompanyController = {
     }
   },
 
-  // Obtener una empresa por nitCode
   async read(req, res) {
-    const { nitCode } = req.params;
+    const { NIT } = req.params;
 
     try {
-      const company = await CompanyService.getCompanyByNitCode(nitCode);
+      const company = await CompanyService.getCompanyByNIT(NIT);
       return res.json(company);
     } catch (error) {
       console.error(error);
@@ -56,10 +65,10 @@ const CompanyController = {
   },
 
   async delete(req, res) {
-    const { nitCode } = req.params;
+    const { NIT } = req.params;
 
     try {
-      const result = await CompanyService.deleteCompany(nitCode);
+      const result = await CompanyService.deleteCompany(NIT);
       return res.json(result);
     } catch (error) {
       console.error(error);
@@ -71,9 +80,9 @@ const CompanyController = {
   },
 
   async login(req, res) {
-    const { nitCode, password } = req.body;
+    const { NIT, password } = req.body;
     try {
-      const company = await CompanyService.findCompanyByNitCode(nitCode);
+      const company = await CompanyService.findCompanyByNIT(NIT);
 
       if (!company) {
         return res.status(401).json({ message: 'Credenciales inválidas' });
@@ -84,7 +93,7 @@ const CompanyController = {
         return res.status(401).json({ message: 'Credenciales inválidas' });
       }
 
-      const token = jwt.sign({ id: company.id, nitCode: company.nitCode }, process.env.JWT_SECRET || 'secreto', {
+      const token = jwt.sign({ id: company.id, NIT: company.NIT }, process.env.JWT_SECRET || 'secreto', {
         expiresIn: '1h',
       });
 

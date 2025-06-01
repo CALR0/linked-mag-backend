@@ -2,30 +2,33 @@ const { Company } = require('../models/index');
 
 const CompanyService = {
   async createCompany(data) {
-    const { name, email, nitCode, password } = data;
+    const { nameCompany, emailCompany, phoneCompany, NIT, password, selectTypeCompany, selectEconomicSector } = data;
 
     const newCompany = await Company.create({
-      name,
-      email,
-      nitCode,
+      nameCompany,
+      emailCompany,
+      phoneCompany,
+      NIT,
       password,
+      selectTypeCompany,
+      selectEconomicSector,
     });
 
     const { password: _, ...companyWithoutPassword } = newCompany.toJSON();
     return companyWithoutPassword;
   },
 
-  async updateCompany(nitCode, data) {
-    const { name, email, password } = data;
-
-    const company = await Company.findOne({ where: { nitCode } });
+  async updateCompany(NIT, data) {
+    const company = await Company.findOne({ where: { NIT } });
     if (!company) {
       throw new Error('Empresa no encontrada');
     }
 
-    company.name = name || company.name;
-    company.email = email || company.email;
-    company.password = password || company.password;
+    Object.keys(data).forEach(key => {
+      if (company[key] !== undefined) {
+        company[key] = data[key];
+      }
+    });
 
     await company.save();
 
@@ -33,16 +36,16 @@ const CompanyService = {
     return updatedCompany;
   },
 
-  async findCompanyByNitCode(nitCode) {
-    const company = await Company.findOne({ where: { nitCode } });
+  async findCompanyByNIT(NIT) {
+    const company = await Company.findOne({ where: { NIT } });
     if (!company) {
       throw new Error('Empresa no encontrada');
     }
     return company; // Includes password, only for login
   },
 
-  async getCompanyByNitCode(nitCode) {
-    const company = await this.findCompanyByNitCode(nitCode);
+  async getCompanyByNIT(NIT) {
+    const company = await this.findCompanyByNIT(NIT);
     const { password: _, ...companyWithoutPassword } = company.toJSON();
     return companyWithoutPassword;
   },
@@ -55,8 +58,8 @@ const CompanyService = {
     });
   },
 
-  async deleteCompany(nitCode) {
-    const company = await Company.findOne({ where: { nitCode } });
+  async deleteCompany(NIT) {
+    const company = await Company.findOne({ where: { NIT } });
     if (!company) {
       throw new Error('Empresa no encontrada');
     }

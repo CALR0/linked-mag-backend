@@ -9,17 +9,59 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
+      nameCompany: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      email: {
-        type: Sequelize.STRING
+      emailCompany: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
-      nitCode: {
-        type: Sequelize.STRING
+      phoneCompany: {
+        type: Sequelize.BIGINT,
+        allowNull: false
+      },
+      NIT: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        unique: true
+      },
+      addressCompany: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      deparmentCompany: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      cityCompany: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      descriptionCompany: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+      profileImage: {
+        type: Sequelize.STRING, // URL de la imagen de perfil
+        allowNull: true
+      },
+      banner: {
+        type: Sequelize.STRING, // URL del banner
+        allowNull: true
+      },
+      selectTypeCompany: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      selectEconomicSector: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

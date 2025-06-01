@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Company.init({
-    name: {
+    nameCompany: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    email: {
+    emailCompany: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
@@ -26,12 +26,48 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    nitCode: {
-      type: DataTypes.STRING,
+    phoneCompany: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    NIT: {
+      type: DataTypes.BIGINT,
       unique: true,
       allowNull: false
     },
+    addressCompany: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    deparmentCompany: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    cityCompany: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    descriptionCompany: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    profileImage: {
+      type: DataTypes.STRING, // URL de la imagen de perfil
+      allowNull: true
+    },
+    banner: {
+      type: DataTypes.STRING, // URL del banner
+      allowNull: true
+    },
+    selectTypeCompany: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    selectEconomicSector: {
       type: DataTypes.STRING,
       allowNull: false
     }
