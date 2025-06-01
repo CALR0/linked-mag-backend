@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const CompanyController = {
- 
+
   async create(req, res) {
     try {
       const companyData = {
@@ -15,7 +15,7 @@ const CompanyController = {
         selectTypeCompany: req.body.selectTypeCompany,
         selectEconomicSector: req.body.selectEconomicSector,
       };
-
+      
       const company = await CompanyService.createCompany(companyData);
       return res.status(201).json(company);
     } catch (error) {

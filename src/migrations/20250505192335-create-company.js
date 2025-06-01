@@ -20,7 +20,7 @@ module.exports = {
       },
       phoneCompany: {
         type: Sequelize.BIGINT,
-        allowNull: false
+        allowNull: true
       },
       NIT: {
         type: Sequelize.BIGINT,

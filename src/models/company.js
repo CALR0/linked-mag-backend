@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     phoneCompany: {
       type: DataTypes.BIGINT,
-      allowNull: false
+      allowNull: true
     },
     NIT: {
       type: DataTypes.BIGINT,

@@ -4,13 +4,13 @@ const CompanyController = require('../controllers/companyController');
 
 router.post('/', CompanyController.create);
 
-router.put('/:nitCode', CompanyController.update);
+router.put('/:NIT', CompanyController.update);
 
-router.get('/:nitCode', CompanyController.read);
+router.get('/:NIT', CompanyController.read);
 
 router.get('/', CompanyController.readAll);
 
-router.delete('/:nitCode', CompanyController.delete);
+router.delete('/:NIT', CompanyController.delete);
 
 router.post('/login', CompanyController.login);
 
