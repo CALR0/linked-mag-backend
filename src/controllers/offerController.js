@@ -52,7 +52,7 @@ const OfferController = {
           minimumFractionDigits: 2
         }).format(offer.salary),
         companyName: offer.company ? offer.company.name : null,
-        status: offer.status ? offer.status.status : null,
+        status: offer.status, // ahora es atributo directo
         phone: offer.phone,
         email: offer.email
       });
@@ -67,7 +67,7 @@ const OfferController = {
       const offers = await OfferService.getAllOffers();
       return res.json(offers.map(offer => ({
         id: offer.id,
-        name: offer.name, // cambiado de title a name
+        name: offer.name,
         description: offer.description,
         modality: offer.modality,
         city: offer.city,
@@ -79,7 +79,7 @@ const OfferController = {
           minimumFractionDigits: 2
         }).format(offer.salary),
         companyName: offer.company ? offer.company.name : null,
-        status: offer.status ? offer.status.status : null,
+        status: offer.status, // ahora es atributo directo
         phone: offer.phone,
         email: offer.email
       })));

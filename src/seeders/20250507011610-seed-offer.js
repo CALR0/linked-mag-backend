@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     // Insertar ofertas
-    const offers = await queryInterface.bulkInsert(
+    await queryInterface.bulkInsert(
       'offers',
       [
         {
@@ -18,6 +18,7 @@ module.exports = {
           email: 'backend@empresa.com',
           salary: 5000000,
           requirements: ['Node.js', 'PostgreSQL', 'Git'],
+          status: 'Abierta',
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -33,35 +34,15 @@ module.exports = {
           email: 'uxui@empresa.com',
           salary: 4000000,
           requirements: ['Figma', 'Adobe XD', 'HTML/CSS'],
+          status: 'Cerrada',
           createdAt: new Date(),
           updatedAt: new Date()
         }
-      ],
-      { returning: true }
+      ]
     );
-
-    const now = new Date();
-    const offerStatuses = offers.map((offer) => {
-      let status = 'Pendiente';
-      if (now >= new Date(offer.publicationDate) && now <= new Date(offer.date)) {
-        status = 'Abierta';
-      } else if (now > new Date(offer.date)) {
-        status = 'Cerrada';
-      }
-
-      return {
-        status,
-        offerId: offer.id,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-    });
-
-    await queryInterface.bulkInsert('offerStatuses', offerStatuses);
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('offerStatuses', null, {});
     await queryInterface.bulkDelete('offers', null, {});
   }
 };

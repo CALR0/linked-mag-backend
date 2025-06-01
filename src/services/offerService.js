@@ -1,4 +1,4 @@
-const { Offer, OfferStatus, Company } = require('../models/index');
+const { Offer, Company } = require('../models/index');
 
 const OfferService = {
   async createOffer(data) {
@@ -25,6 +25,14 @@ const OfferService = {
     const createdAt = now;
     const updatedAt = now;
 
+    // Calcular el estado inicial de la oferta
+    let status = 'Pausada';
+    if (now >= new Date(publicationDate) && now <= new Date(date)) {
+      status = 'Abierta';
+    } else if (now > new Date(date)) {
+      status = 'Cerrada';
+    }
+
     const newOffer = await Offer.create({
       name,
       description,
@@ -39,22 +47,9 @@ const OfferService = {
       vacancies,
       applicants: applicants || 0,
       email,
+      status,
       createdAt,
       updatedAt
-    });
-
-    // Calcular el estado inicial de la oferta
-    let status = 'Pendiente';
-    if (now >= new Date(publicationDate) && now <= new Date(date)) {
-      status = 'Abierta';
-    } else if (now > new Date(date)) {
-      status = 'Cerrada';
-    }
-
-    // Crear el estado inicial en la tabla offerStatuses
-    await OfferStatus.create({
-      status,
-      offerId: newOffer.id
     });
 
     return newOffer;
@@ -81,20 +76,17 @@ const OfferService = {
     offer.applicants = applicants || offer.applicants;
     offer.email = email || offer.email;
 
-    await offer.save();
-
     // Actualizar el estado en función de las fechas
     const now = new Date();
-    let status = 'Pendiente';
+    let status = 'Pausada';
     if (now >= new Date(offer.publicationDate) && now <= new Date(offer.date)) {
       status = 'Abierta';
     } else if (now > new Date(offer.date)) {
       status = 'Cerrada';
     }
+    offer.status = status;
 
-    const offerStatus = await OfferStatus.findOne({ where: { offerId: id } });
-    offerStatus.status = status;
-    await offerStatus.save();
+    await offer.save();
 
     return offer;
   },
@@ -102,8 +94,7 @@ const OfferService = {
   async getAllOffers() {
     return await Offer.findAll({
       include: [
-        { model: Company, as: 'company' },
-        { model: OfferStatus, as: 'status' }
+        { model: Company, as: 'company' }
       ]
     });
   },
@@ -111,8 +102,7 @@ const OfferService = {
   async getOfferById(id) {
     return await Offer.findByPk(id, {
       include: [
-        { model: Company, as: 'company' },
-        { model: OfferStatus, as: 'status' }
+        { model: Company, as: 'company' }
       ]
     });
   },
@@ -123,7 +113,6 @@ const OfferService = {
       throw new Error('Oferta no encontrada');
     }
     await Offer.destroy({ where: { id } });
-    await OfferStatus.destroy({ where: { offerId: id } });
     return { message: 'Oferta eliminada correctamente' };
   }
 };

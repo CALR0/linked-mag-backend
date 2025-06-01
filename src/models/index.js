@@ -6,7 +6,6 @@ const CompanyModel = require('./company');
 const OfferModel = require('./offer');
 const PostulationModel = require('./postulation');
 const PostulationStatusModel = require('./postulationStatus');
-const OfferStatusModel = require('./offerStatus');
 const CurriculumVitaeModel = require('./curriculumVitae');
 
 dotenv.config();
@@ -28,7 +27,6 @@ const Company = CompanyModel(sequelize, Sequelize.DataTypes);
 const Offer = OfferModel(sequelize, Sequelize.DataTypes);
 const Postulation = PostulationModel(sequelize, Sequelize.DataTypes);
 const PostulationStatus = PostulationStatusModel(sequelize, Sequelize.DataTypes);
-const OfferStatus = OfferStatusModel(sequelize, Sequelize.DataTypes);
 const CurriculumVitae = CurriculumVitaeModel(sequelize, Sequelize.DataTypes);
 
 // Crear el objeto db
@@ -40,7 +38,6 @@ const db = {
   Offer,
   Postulation,
   PostulationStatus,
-  OfferStatus,
   CurriculumVitae
 };
 
@@ -49,7 +46,7 @@ Company.associate(db);
 Offer.associate(db);
 Postulation.associate(db);
 PostulationStatus.associate(db);
-OfferStatus.associate(db);
+// OfferStatus.associate(db); // Eliminado
 Student.associate(db);
 CurriculumVitae.associate(db);
 

@@ -16,11 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'postulations'
       });
 
-      // Relación: Una oferta tiene un estado
-      Offer.hasOne(models.OfferStatus, {
-        foreignKey: 'offerId',
-        as: 'status'
-      });
+      // Eliminada la relación con OfferStatus
     }
   }
 
@@ -83,6 +79,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [['Pausada', 'Abierta', 'Cerrada']]
+      },
+      defaultValue: 'Abierta'
     }
   }, {
     sequelize,
