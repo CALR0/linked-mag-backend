@@ -1,4 +1,5 @@
 const { Student } = require('../models/index');
+const bcrypt = require('bcryptjs');
 
 const StudentService = {
   async createStudent(data) {
@@ -22,16 +23,23 @@ const StudentService = {
   },
 
   async updateStudent(studentCode, data) {
-    const { name, password, academicProgram } = data;
+    const { name, email, password, studentCode: newStudentCode, academicProgram } = data;
 
     const student = await Student.findOne({ where: { studentCode } });
     if (!student) {
       throw new Error('Estudiante no encontrado');
     }
 
-    student.name = name || student.name;
-    student.password = password || student.password;
-    student.academicProgram = academicProgram || student.academicProgram;
+    if (name) student.name = name;
+    if (email) student.email = email;
+    if (newStudentCode) student.studentCode = newStudentCode;
+    if (academicProgram) student.academicProgram = academicProgram;
+
+    // Solo hashea si el password viene en el body y es diferente
+    if (password && password !== student.password) {
+      const salt = await bcrypt.genSalt(10);
+      student.password = await bcrypt.hash(password, salt);
+    }
 
     await student.save();
 
@@ -47,13 +55,11 @@ const StudentService = {
     return student; // con password incluido, SOLO para login
   },
 
-
   async getStudentByCode(studentCode) {
     const student = await this.findStudentByCode(studentCode);
     const { password: _, ...studentWithoutPassword } = student.toJSON();
     return studentWithoutPassword;
   },
-
 
   async getStudentById(id) {
     const student = await Student.findOne({ where: { id } });

@@ -11,7 +11,7 @@ module.exports = {
         email: 'carlos.perez@example.com',
         password: 'hashedpassword1',  
         studentCode: '20250501',
-        academicProgram: Sequelize.literal(`'{"program": "Ingeniería de Sistemas"}'::jsonb`),
+        academicProgram: JSON.stringify({ name: 'Ingeniería de Sistemas', code: '3147' }),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -20,11 +20,11 @@ module.exports = {
         email: 'maria.gomez@example.com',
         password: 'hashedpassword2',
         studentCode: '20250502',
-        academicProgram: Sequelize.literal(`'{"program": "Derecho"}'::jsonb`),
+        academicProgram: JSON.stringify({ name: 'Ingeniería de Sistemas', code: '3147' }),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      // Mas estudiantes acá
+      // Más estudiantes aquí si lo deseas
     ]);
   },
 
