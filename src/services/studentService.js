@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const StudentService = {
   async createStudent(data) {
-    const { name, email, password, studentCode, academicProgram } = data;
+    const { name, email, password, studentCode, academicProgram, statusRegister } = data;
 
     // Validar academicProgram
     if (!academicProgram?.name || !academicProgram?.code) {
@@ -16,6 +16,7 @@ const StudentService = {
       password,
       studentCode,
       academicProgram,
+      statusRegister: statusRegister ?? null // Permite nulo si no se envía
     });
 
     const { password: _, ...studentWithoutPassword } = newStudent.toJSON();
@@ -23,17 +24,18 @@ const StudentService = {
   },
 
   async updateStudent(studentCode, data) {
-    const { name, email, password, studentCode: newStudentCode, academicProgram } = data;
+    const { name, email, password, studentCode: newStudentCode, academicProgram, statusRegister } = data;
 
     const student = await Student.findOne({ where: { studentCode } });
     if (!student) {
       throw new Error('Estudiante no encontrado');
     }
 
-    if (name) student.name = name;
-    if (email) student.email = email;
-    if (newStudentCode) student.studentCode = newStudentCode;
-    if (academicProgram) student.academicProgram = academicProgram;
+    if (name !== undefined) student.name = name;
+    if (email !== undefined) student.email = email;
+    if (newStudentCode !== undefined) student.studentCode = newStudentCode;
+    if (academicProgram !== undefined) student.academicProgram = academicProgram;
+    if (statusRegister !== undefined) student.statusRegister = statusRegister;
 
     // Solo hashea si el password viene en el body y es diferente
     if (password && password !== student.password) {
@@ -45,6 +47,17 @@ const StudentService = {
 
     const { password: _, ...updatedStudent } = student.toJSON();
     return updatedStudent;
+  },
+
+  async updateStatusRegister(studentCode, statusRegister) {
+    const student = await Student.findOne({ where: { studentCode } });
+    if (!student) {
+      throw new Error('Estudiante no encontrado');
+    }
+    student.statusRegister = statusRegister;
+    await student.save();
+    const { password: _, ...studentWithoutPassword } = student.toJSON();
+    return studentWithoutPassword;
   },
 
   async findStudentByCode(studentCode) {

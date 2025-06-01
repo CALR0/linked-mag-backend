@@ -17,7 +17,7 @@ const StudentController = {
       return res.status(201).json(student);
     } catch (error) {
       if (error.name === 'SequelizeUniqueConstraintError') {
-        return res.status(409).json({ // 409 Conflict
+        return res.status(409).json({
           message: 'El correo o código estudiantil ya está registrado',
         });
       }
@@ -38,6 +38,25 @@ const StudentController = {
         return res.status(404).json({ message: error.message });
       }
       return res.status(500).json({ message: 'Error al actualizar los datos del estudiante' });
+    }
+  },
+
+  async updateStatusRegister(req, res) {
+    const { studentCode } = req.params;
+    const { statusRegister } = req.body;
+
+    try {
+      const updatedStudent = await StudentService.updateStatusRegister(studentCode, statusRegister);
+      return res.json(updatedStudent);
+    } catch (error) {
+      console.error(error);
+      if (
+        error.message === 'Estudiante no encontrado' ||
+        error.message === 'Estado inválido'
+      ) {
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al actualizar el estado del estudiante' });
     }
   },
 

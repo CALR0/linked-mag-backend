@@ -32,6 +32,11 @@ module.exports = {
         allowNull: false,
         defaultValue: []
       },
+      statusRegister: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: 'Pendiente'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

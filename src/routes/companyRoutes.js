@@ -6,6 +6,8 @@ router.post('/', CompanyController.create);
 
 router.put('/:NIT', CompanyController.update);
 
+router.patch('/:NIT', CompanyController.updateStatusRegister);
+
 router.get('/:NIT', CompanyController.read);
 
 router.get('/', CompanyController.readAll);

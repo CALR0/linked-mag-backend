@@ -14,8 +14,15 @@ const CompanyController = {
         password: req.body.password,
         selectTypeCompany: req.body.selectTypeCompany,
         selectEconomicSector: req.body.selectEconomicSector,
+        addressCompany: req.body.addressCompany,
+        deparmentCompany: req.body.deparmentCompany,
+        cityCompany: req.body.cityCompany,
+        descriptionCompany: req.body.descriptionCompany,
+        profileImage: req.body.profileImage,
+        banner: req.body.banner,
+        statusRegister: req.body.statusRegister // Permite nulo o valor por defecto
       };
-      
+
       const company = await CompanyService.createCompany(companyData);
       return res.status(201).json(company);
     } catch (error) {
@@ -36,6 +43,25 @@ const CompanyController = {
         return res.status(404).json({ message: error.message });
       }
       return res.status(500).json({ message: 'Error al actualizar la empresa' });
+    }
+  },
+
+  async updateStatusRegister(req, res) {
+    const { NIT } = req.params;
+    const { statusRegister } = req.body;
+
+    try {
+      const updatedCompany = await CompanyService.updateStatusRegister(NIT, statusRegister);
+      return res.json(updatedCompany);
+    } catch (error) {
+      console.error(error);
+      if (
+        error.message === 'Empresa no encontrada' ||
+        error.message === 'Estado inválido'
+      ) {
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al actualizar el estado de la empresa' });
     }
   },
 

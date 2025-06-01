@@ -48,6 +48,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSONB, // almacenar un array o objeto JSON
       allowNull: false,
       defaultValue: []
+    },
+    statusRegister: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isIn: [['Aprobado', 'Rechazado', 'Pendiente']]
+      },
+      defaultValue: 'Pendiente'
     }
   }, {
     sequelize,

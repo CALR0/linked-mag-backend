@@ -7,6 +7,8 @@ router.post('/', StudentController.create);
 
 router.put('/:studentCode', StudentController.update);
 
+router.patch('/:studentCode', StudentController.updateStatusRegister);
+
 router.get('/id/:id', StudentController.getById);
 
 router.get('/code/:studentCode', StudentController.getByCode);
@@ -24,4 +26,3 @@ router.get('/:id/last-applied-offer', StudentController.getLastAppliedOffer);
 router.get('/:id/applied-offers/count', StudentController.getAppliedOffersCount);
 
 module.exports = router;
-

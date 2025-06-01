@@ -1,8 +1,7 @@
 'use strict';
 const bcrypt = require('bcryptjs');
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Company extends Model {
     static associate(models) {
@@ -70,6 +69,14 @@ module.exports = (sequelize, DataTypes) => {
     selectEconomicSector: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    statusRegister: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isIn: [['Aprobado', 'Rechazado', 'Pendiente']]
+      },
+      defaultValue: 'Pendiente'
     }
   }, {
     sequelize,
