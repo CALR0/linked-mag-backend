@@ -1,24 +1,19 @@
-const { Postulation, PostulationStatus, Student, Offer } = require('../models/index');
+const { Postulation, Student, Offer } = require('../models/index');
 
 const PostulationService = {
   async createPostulation(data) {
     const { academicProgram, status, studentId, offerId } = data;
 
-    const newPostulation = await Postulation.create({
-      academicProgram,
-      studentId,
-      offerId
-    });
-
-    // Solo permitir 'Aceptada', 'Rechazada', 'Pendiente'
+    // Solo permitir 'Pendiente', 'Aceptada', 'Rechazada'
     let validStatus = 'Pendiente';
     if (status === 'Aceptada') validStatus = 'Aceptada';
     if (status === 'Rechazada') validStatus = 'Rechazada';
 
-    // Crear el estado inicial de la postulación
-    await PostulationStatus.create({
-      status: validStatus,
-      postulationId: newPostulation.id
+    const newPostulation = await Postulation.create({
+      academicProgram,
+      studentId,
+      offerId,
+      status: validStatus
     });
 
     return newPostulation;
@@ -33,18 +28,16 @@ const PostulationService = {
     }
 
     postulation.academicProgram = academicProgram || postulation.academicProgram;
-    await postulation.save();
 
+    // Solo permitir 'Pendiente', 'Aceptada', 'Rechazada'
     if (status) {
-      // Solo permitir 'Aceptada', 'Rechazada', 'Pendiente'
       let validStatus = 'Pendiente';
       if (status === 'Aceptada') validStatus = 'Aceptada';
       if (status === 'Rechazada') validStatus = 'Rechazada';
-
-      const postulationStatus = await PostulationStatus.findOne({ where: { postulationId: id } });
-      postulationStatus.status = validStatus;
-      await postulationStatus.save();
+      postulation.status = validStatus;
     }
+
+    await postulation.save();
 
     return postulation;
   },
@@ -53,8 +46,7 @@ const PostulationService = {
     const postulation = await Postulation.findByPk(id, {
       include: [
         { model: Student, as: 'student' },
-        { model: Offer, as: 'offer' },
-        { model: PostulationStatus, as: 'status' }
+        { model: Offer, as: 'offer' }
       ]
     });
     if (!postulation) {
@@ -67,8 +59,7 @@ const PostulationService = {
     const postulations = await Postulation.findAll({
       include: [
         { model: Student, as: 'student' },
-        { model: Offer, as: 'offer' },
-        { model: PostulationStatus, as: 'status' }
+        { model: Offer, as: 'offer' }
       ]
     });
     return postulations;
@@ -80,7 +71,6 @@ const PostulationService = {
       throw new Error('Postulación no encontrada');
     }
     await Postulation.destroy({ where: { id } });
-    await PostulationStatus.destroy({ where: { postulationId: id } });
     return { message: 'Postulación eliminada correctamente' };
   },
 
@@ -98,7 +88,7 @@ const PostulationService = {
     const offer = lastPostulation.offer;
     return {
       name: offer.name,
-      category: offer.description, // Puedes ajustar si tienes un campo específico para categoría
+      category: offer.description,
       deadline: offer.date,
       vacancies: offer.vacancies,
       applicants: await Postulation.count({ where: { offerId: offer.id } }),

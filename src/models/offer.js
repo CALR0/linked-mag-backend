@@ -15,8 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'offerId',
         as: 'postulations'
       });
-
-      // Eliminada la relación con OfferStatus
     }
   }
 

@@ -15,12 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'offerId',
         as: 'offer'
       });
-
-      // Relación: Una postulación tiene un estado
-      Postulation.hasOne(models.PostulationStatus, {
-        foreignKey: 'postulationId',
-        as: 'status'
-      });
     }
   }
 
@@ -36,6 +30,14 @@ module.exports = (sequelize, DataTypes) => {
     offerId: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [['Pendiente', 'Aceptada', 'Rechazada']]
+      },
+      defaultValue: 'Pendiente'
     }
   }, {
     sequelize,
