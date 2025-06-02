@@ -128,6 +128,22 @@ const PostulationService = {
 
     return newPostulation;
   },
+
+  async getPostulationsByOffer(offerId, companyId) {
+    const offer = await Offer.findOne({ where: { id: offerId, companyId } });
+    if (!offer) {
+      throw new Error('Oferta no encontrada o no pertenece a la empresa');
+    }
+
+    const postulations = await Postulation.findAll({
+      where: { offerId },
+      include: [
+        { model: Student, as: 'student', attributes: ['id', 'name', 'email', 'studentCode'] }
+      ]
+    });
+
+    return postulations;
+  },
 };
 
 module.exports = PostulationService;

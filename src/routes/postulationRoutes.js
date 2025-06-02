@@ -15,4 +15,6 @@ router.delete('/:id', authMiddleware, PostulationController.delete); // Requires
 
 router.post('/offers/:offerId/apply', authMiddleware, PostulationController.createPostulationByOffer); // Requires authentication
 
+router.get('/offers/:offerId/postulations', authMiddleware, PostulationController.getPostulationsByOffer);
+
 module.exports = router;

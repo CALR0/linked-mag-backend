@@ -119,7 +119,7 @@ const CompanyController = {
         return res.status(401).json({ message: 'Credenciales inválidas' });
       }
 
-      const token = jwt.sign({ id: company.id, NIT: company.NIT }, process.env.JWT_SECRET || 'secreto', {
+      const token = jwt.sign({ id: company.id, NIT: company.NIT, role: 'company' }, process.env.JWT_SECRET || 'secreto', {
         expiresIn: '1h',
       });
 
