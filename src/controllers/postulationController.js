@@ -108,6 +108,30 @@ const PostulationController = {
       }
       return res.status(500).json({ message: 'Error al obtener las postulaciones de la oferta' });
     }
+  },
+
+  async updateStatusByCompany(req, res) {
+    const { id: postulationId } = req.params;
+    const { status } = req.body;
+    const { id: companyId, role } = req.user;
+
+    if (role !== 'company') {
+      return res.status(403).json({ message: 'Solo las empresas pueden actualizar el estado de las postulaciones' });
+    }
+
+    try {
+      const updatedPostulation = await PostulationService.updatePostulationStatusByCompany(postulationId, companyId, status);
+      return res.json(updatedPostulation);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Postulación no encontrada o no pertenece a una oferta de la empresa') {
+        return res.status(404).json({ message: error.message });
+      }
+      if (error.message === 'Estado inválido') {
+        return res.status(400).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al actualizar el estado de la postulación' });
+    }
   }
 };
 

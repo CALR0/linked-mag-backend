@@ -13,4 +13,6 @@ router.delete('/:id', authMiddleware, OfferController.delete); // Requires authe
 
 router.get('/:id', OfferController.getOfferById); // Public route for viewing a specific offer
 
+router.get('/company', authMiddleware, OfferController.getAllOffersByCompany); // Requires authentication
+
 module.exports = router;

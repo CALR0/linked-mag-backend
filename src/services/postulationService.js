@@ -140,12 +140,46 @@ const PostulationService = {
     const postulations = await Postulation.findAll({
       where: { offerId },
       include: [
-        { model: Student, as: 'student', attributes: ['id', 'name', 'email', 'studentCode'] }
-      ]
+        { 
+          model: Student, 
+          as: 'student', 
+          attributes: ['id', 'name', 'email', 'studentCode', 'academicProgram'] 
+        }
+      ],
+      attributes: ['createdAt', 'status'] // Include postulation date and status
     });
     console.log('Postulations found:', postulations.map(p => p.toJSON()));
 
-    return postulations;
+    return postulations.map(postulation => ({
+      studentId: postulation.student.id,
+      name: postulation.student.name,
+      email: postulation.student.email,
+      studentCode: postulation.student.studentCode,
+      academicProgram: postulation.student.academicProgram,
+      postulationDate: postulation.createdAt,
+      status: postulation.status
+    }));
+  },
+
+  async updatePostulationStatusByCompany(postulationId, companyId, status) {
+    const postulation = await Postulation.findByPk(postulationId, {
+      include: { model: Offer, as: 'offer', where: { companyId } }
+    });
+
+    if (!postulation) {
+      throw new Error('Postulación no encontrada o no pertenece a una oferta de la empresa');
+    }
+
+    // Validar el estado
+    const validStatuses = ['Pendiente', 'Aceptada', 'Rechazada'];
+    if (!validStatuses.includes(status)) {
+      throw new Error('Estado inválido');
+    }
+
+    postulation.status = status;
+    await postulation.save();
+
+    return postulation;
   },
 };
 
