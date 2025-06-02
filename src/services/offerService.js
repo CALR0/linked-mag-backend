@@ -90,6 +90,15 @@ const OfferService = {
     });
   },
 
+  async getOffersByCompany(companyId) {
+    return await Offer.findAll({
+      where: { companyId },
+      include: [
+        { model: Company, as: 'company' }
+      ]
+    });
+  },
+
   async getOfferById(id) {
     return await Offer.findByPk(id, {
       include: [
@@ -105,7 +114,8 @@ const OfferService = {
     }
     await Offer.destroy({ where: { id } });
     return { message: 'Oferta eliminada correctamente' };
-  }
+  },
+
 };
 
 module.exports = OfferService;

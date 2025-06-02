@@ -55,6 +55,22 @@ const OfferController = {
     }
   },
 
+  async getAllOffersByCompany(req, res) {
+    const { id: companyId, role } = req.user;
+
+    if (role !== 'company') {
+      return res.status(403).json({ message: 'Solo las empresas pueden acceder a sus ofertas' });
+    }
+
+    try {
+      const offers = await OfferService.getOffersByCompany(companyId);
+      return res.json(offers);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Error al obtener las ofertas de la empresa' });
+    }
+  },
+
   async delete(req, res) {
     const { id } = req.params;
 
@@ -69,6 +85,7 @@ const OfferController = {
       return res.status(500).json({ message: 'Error al eliminar la oferta' });
     }
   },
+
 };
 
 module.exports = OfferController;
