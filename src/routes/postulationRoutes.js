@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const PostulationController = require('../controllers/postulationController');
-const authMiddleware = require('../middlewares/authMiddleware');
+// const authMiddleware = require('../middlewares/authMiddleware');
 
-router.post('/', authMiddleware, PostulationController.create); // Requires authentication
+router.post('/', /* authMiddleware, */ PostulationController.create); // Middleware disabled
 
-router.put('/:id', authMiddleware, PostulationController.update); // Requires authentication
+router.put('/:id', /* authMiddleware, */ PostulationController.update); // Middleware disabled
 
-router.get('/:id', authMiddleware, PostulationController.read); // Requires authentication
+router.get('/:id', /* authMiddleware, */ PostulationController.read); // Middleware disabled
 
-router.get('/', authMiddleware, PostulationController.readAll); // Requires authentication
+router.get('/', /* authMiddleware, */ PostulationController.readAll); // Middleware disabled
 
-router.delete('/:id', authMiddleware, PostulationController.delete); // Requires authentication
+router.delete('/:id', /* authMiddleware, */ PostulationController.delete); // Middleware disabled
 
-router.post('/offers/:offerId/apply', authMiddleware, PostulationController.createPostulationByOffer); // Requires authentication
+router.post('/offers/:offerId/apply', /* authMiddleware, */ PostulationController.createPostulationByOffer); // Middleware disabled
 
-router.get('/offers/:offerId/postulations', authMiddleware, PostulationController.getPostulationsByOffer);
+router.get('/offers/:offerId/postulations', /* authMiddleware, */ PostulationController.getPostulationsByOffer); // Middleware disabled
 
 router.patch('/:id/status', PostulationController.updateStatusByCompany);
 

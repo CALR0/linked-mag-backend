@@ -16,7 +16,7 @@ const StudentService = {
       password,
       studentCode,
       academicProgram,
-      statusRegister: statusRegister ?? null // Permite nulo si no se envía
+      statusRegister: statusRegister ?? 'Pendiente'
     });
 
     const { password: _, ...studentWithoutPassword } = newStudent.toJSON();
