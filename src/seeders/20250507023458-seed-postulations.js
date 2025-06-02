@@ -7,7 +7,6 @@ module.exports = {
       'postulations',
       [
         {
-          academicProgram: Sequelize.literal(`'{"program": "Ingeniería de Sistemas"}'::jsonb`),
           studentId: 1,
           offerId: 1,
           status: 'Pendiente',
@@ -15,7 +14,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          academicProgram: Sequelize.literal(`'{"program": "Ingeniería de Software"}'::jsonb`),
           studentId: 2,
           offerId: 2,
           status: 'Aceptada',

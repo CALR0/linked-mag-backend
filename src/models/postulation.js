@@ -7,44 +7,43 @@ module.exports = (sequelize, DataTypes) => {
       // Relación: Una postulación pertenece a un estudiante
       Postulation.belongsTo(models.Student, {
         foreignKey: 'studentId',
-        as: 'student'
+        as: 'student',
       });
 
       // Relación: Una postulación pertenece a una oferta
       Postulation.belongsTo(models.Offer, {
         foreignKey: 'offerId',
-        as: 'offer'
+        as: 'offer',
       });
     }
   }
 
-  Postulation.init({
-    academicProgram: {
-      type: DataTypes.JSONB,
-      allowNull: false
-    },
-    studentId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    offerId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: [['Pendiente', 'Aceptada', 'Rechazada']]
+  Postulation.init(
+    {
+      studentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
-      defaultValue: 'Pendiente'
+      offerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [['Pendiente', 'Aceptada', 'Rechazada']],
+        },
+        defaultValue: 'Pendiente',
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Postulation',
+      tableName: 'postulations',
+      timestamps: true,
     }
-  }, {
-    sequelize,
-    modelName: 'Postulation',
-    tableName: 'postulations',
-    timestamps: true
-  });
+  );
 
   return Postulation;
 };

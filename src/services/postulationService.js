@@ -2,7 +2,7 @@ const { Postulation, Student, Offer } = require('../models/index');
 
 const PostulationService = {
   async createPostulation(data) {
-    const { academicProgram, status, studentId, offerId } = data;
+    const { status, studentId, offerId } = data;
 
     // Solo permitir 'Pendiente', 'Aceptada', 'Rechazada'
     let validStatus = 'Pendiente';
@@ -10,7 +10,6 @@ const PostulationService = {
     if (status === 'Rechazada') validStatus = 'Rechazada';
 
     const newPostulation = await Postulation.create({
-      academicProgram,
       studentId,
       offerId,
       status: validStatus
@@ -20,14 +19,12 @@ const PostulationService = {
   },
 
   async updatePostulation(id, data) {
-    const { academicProgram, status } = data;
+    const { status } = data;
 
     const postulation = await Postulation.findByPk(id);
     if (!postulation) {
       throw new Error('Postulación no encontrada');
     }
-
-    postulation.academicProgram = academicProgram || postulation.academicProgram;
 
     // Solo permitir 'Pendiente', 'Aceptada', 'Rechazada'
     if (status) {
@@ -100,6 +97,36 @@ const PostulationService = {
 
   async getAppliedOffersCount(studentId) {
     return await Postulation.count({ where: { studentId } });
+  },
+
+  async createPostulationByOffer(studentId, offerId) {
+    const student = await Student.findByPk(studentId);
+    if (!student) {
+      throw new Error('Estudiante no encontrado');
+    }
+
+    const offer = await Offer.findByPk(offerId);
+    if (!offer) {
+      throw new Error('Oferta no encontrada');
+    }
+
+    const existingPostulation = await Postulation.findOne({
+      where: { studentId, offerId },
+    });
+    if (existingPostulation) {
+      throw new Error('Ya has aplicado a esta oferta');
+    }
+
+    const newPostulation = await Postulation.create({
+      studentId,
+      offerId,
+      status: 'Pendiente',
+    });
+
+    offer.applicants += 1;
+    await offer.save();
+
+    return newPostulation;
   },
 };
 
