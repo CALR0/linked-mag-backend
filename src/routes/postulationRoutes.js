@@ -17,4 +17,6 @@ router.post('/offers/:offerId/apply', authMiddleware, PostulationController.crea
 
 router.get('/offers/:offerId/postulations', authMiddleware, PostulationController.getPostulationsByOffer);
 
+router.patch('/:id/status', PostulationController.updateStatusByCompany);
+
 module.exports = router;
