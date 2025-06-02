@@ -9,10 +9,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      academicProgram: {
-        type: Sequelize.JSONB,
-        allowNull: false
-      },
       studentId: {
         type: Sequelize.INTEGER,
         allowNull: false,

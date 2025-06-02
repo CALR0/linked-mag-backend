@@ -1,6 +1,5 @@
 const StudentService = require('../services/studentService');
-const PostulationService = require('../services/postulationService');
-const bcrypt = require('bcrypt'); // para comparar password hasheado
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Postulation, Offer } = require('../models/index');
 
@@ -131,7 +130,7 @@ const StudentController = {
       }
 
       // Generar token JWT (ajusta el secret y expiración)
-      const token = jwt.sign({ id: student.id, studentCode: student.studentCode }, process.env.JWT_SECRET || 'secreto', {
+      const token = jwt.sign({ id: student.id, studentCode: student.studentCode, role: 'student' }, process.env.JWT_SECRET || 'secreto', {
         expiresIn: '1h',
       });
 

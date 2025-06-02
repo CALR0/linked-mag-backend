@@ -27,7 +27,9 @@ const CompanyController = {
       return res.status(201).json(company);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Error al crear la empresa' });
+      return res.status(500).json({
+        message: 'Error al registrar la empresa: ' + error.message
+      });
     }
   },
 
@@ -119,7 +121,7 @@ const CompanyController = {
         return res.status(401).json({ message: 'Credenciales inválidas' });
       }
 
-      const token = jwt.sign({ id: company.id, NIT: company.NIT }, process.env.JWT_SECRET || 'secreto', {
+      const token = jwt.sign({ id: company.id, NIT: company.NIT, role: 'company' }, process.env.JWT_SECRET || 'secreto', {
         expiresIn: '1h',
       });
 
@@ -131,6 +133,8 @@ const CompanyController = {
       });
     } catch (error) {
       console.error('Error en login:', error);
+      // tu registro aun no ha sido aprobado por la universidad
+      
       return res.status(500).json({ message: 'Error interno del servidor' });
     }
   },

@@ -56,25 +56,16 @@ const OfferService = {
   },
 
   async updateOffer(id, data) {
-    const { name, description, modality, city, publicationDate, date, phone, salary, requirements, vacancies, applicants, email } = data;
-
     const offer = await Offer.findByPk(id);
     if (!offer) {
       throw new Error('Oferta no encontrada');
     }
 
-    offer.name = name || offer.name;
-    offer.description = description || offer.description;
-    offer.modality = modality || offer.modality;
-    offer.city = city || offer.city;
-    offer.publicationDate = publicationDate || offer.publicationDate;
-    offer.date = date || offer.date;
-    offer.phone = phone || offer.phone;
-    offer.salary = salary || offer.salary;
-    offer.requirements = Array.isArray(requirements) ? requirements : offer.requirements;
-    offer.vacancies = vacancies || offer.vacancies;
-    offer.applicants = applicants || offer.applicants;
-    offer.email = email || offer.email;
+    Object.keys(data).forEach(key => {
+      if (offer[key] !== undefined) {
+        offer[key] = data[key];
+      }
+    });
 
     // Actualizar el estado en función de las fechas
     const now = new Date();

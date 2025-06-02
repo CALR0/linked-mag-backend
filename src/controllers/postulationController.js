@@ -1,10 +1,10 @@
 const PostulationService = require('../services/postulationService');
+const OfferService = require('../services/offerService');
 
 const PostulationController = {
 
   async create(req, res) {
     try {
-      const postulation = await PostulationService.createPostulation(req.body);
       return res.status(201).json(postulation);
     } catch (error) {
       console.error(error);
@@ -66,6 +66,49 @@ const PostulationController = {
       return res.status(500).json({ message: 'Error al eliminar la postulación' });
     }
   },
+
+  async createPostulationByOffer(req, res) {
+    const { offerId } = req.params;
+    const { id: studentId, role } = req.user;
+
+    if (role !== 'student') {
+      return res.status(403).json({ message: 'Solo los estudiantes pueden aplicar a ofertas' });
+    }
+
+    try {
+      const postulation = await PostulationService.createPostulationByOffer(studentId, offerId);
+      return res.status(201).json(postulation);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Estudiante no encontrado' || error.message === 'Oferta no encontrada') {
+        return res.status(404).json({ message: error.message });
+      }
+      if (error.message === 'Ya has aplicado a esta oferta') {
+        return res.status(409).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al aplicar a la oferta' });
+    }
+  },
+
+  async getPostulationsByOffer(req, res) {
+    const { offerId } = req.params;
+    const { id: companyId, role } = req.user;
+
+    if (role !== 'company') {
+      return res.status(403).json({ message: 'Solo las empresas pueden acceder a las postulaciones de sus ofertas' });
+    }
+
+    try {
+      const postulations = await PostulationService.getPostulationsByOffer(offerId, companyId);
+      return res.json(postulations);
+    } catch (error) {
+      console.error(error);
+      if (error.message === 'Oferta no encontrada o no pertenece a la empresa') {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(500).json({ message: 'Error al obtener las postulaciones de la oferta' });
+    }
+  }
 };
 
 module.exports = PostulationController;
