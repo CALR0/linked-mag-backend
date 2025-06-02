@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const CompanyController = require('../controllers/companyController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.post('/', CompanyController.create);
+router.post('/', CompanyController.create); // Public route for company registration
 
-router.put('/:NIT', CompanyController.update);
+router.put('/:NIT', authMiddleware, CompanyController.update); // Requires authentication
 
-router.patch('/:NIT', CompanyController.updateStatusRegister);
+router.patch('/:NIT', authMiddleware, CompanyController.updateStatusRegister); // Requires authentication
 
-router.get('/:NIT', CompanyController.read);
+router.get('/:NIT', authMiddleware, CompanyController.read); // Requires authentication
 
-router.get('/', CompanyController.readAll);
+router.get('/', authMiddleware, CompanyController.readAll); // Requires authentication
 
-router.delete('/:NIT', CompanyController.delete);
+router.delete('/:NIT', authMiddleware, CompanyController.delete); // Requires authentication
 
-router.post('/login', CompanyController.login);
+router.post('/login', CompanyController.login); // Public route for login
 
 module.exports = router;

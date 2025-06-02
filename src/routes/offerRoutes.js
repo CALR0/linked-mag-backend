@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const OfferController = require('../controllers/offerController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-router.post('/', OfferController.create);
+router.post('/', authMiddleware, OfferController.create); // Requires authentication
 
-router.put('/:id', OfferController.update);
+router.put('/:id', authMiddleware, OfferController.update); // Requires authentication
 
-router.get('/', OfferController.getAllOffers);
+router.get('/', OfferController.getAllOffers); // Public route for viewing all offers
 
-router.delete('/:id', OfferController.delete);
+router.delete('/:id', authMiddleware, OfferController.delete); // Requires authentication
 
-router.get('/:id', OfferController.getOfferById);
+router.get('/:id', OfferController.getOfferById); // Public route for viewing a specific offer
 
 module.exports = router;
