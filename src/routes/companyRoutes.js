@@ -7,7 +7,7 @@ router.post('/', CompanyController.create); // Public route for company registra
 
 router.put('/:NIT', authMiddleware, CompanyController.update); // Requires authentication
 
-router.patch('/:NIT', authMiddleware, CompanyController.updateStatusRegister); // Requires authentication
+router.patch('/:NIT', CompanyController.updateStatusRegister); // Requires authentication
 
 router.get('/:NIT', authMiddleware, CompanyController.read); // Requires authentication
 

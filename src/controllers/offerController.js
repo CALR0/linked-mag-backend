@@ -38,24 +38,7 @@ const OfferController = {
         return res.status(404).json({ message: 'Oferta no encontrada' });
       }
 
-      res.json({
-        id: offer.id,
-        name: offer.name,
-        description: offer.description,
-        modality: offer.modality,
-        city: offer.city,
-        publicationDate: offer.publicationDate,
-        date: offer.date,
-        salary: new Intl.NumberFormat('es-CO', {
-          style: 'currency',
-          currency: 'COP',
-          minimumFractionDigits: 2
-        }).format(offer.salary),
-        companyName: offer.company ? offer.company.name : null,
-        status: offer.status, // ahora es atributo directo
-        phone: offer.phone,
-        email: offer.email
-      });
+      res.json(offer);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Error al obtener la oferta' });
@@ -65,24 +48,7 @@ const OfferController = {
   async getAllOffers(req, res) {
     try {
       const offers = await OfferService.getAllOffers();
-      return res.json(offers.map(offer => ({
-        id: offer.id,
-        name: offer.name,
-        description: offer.description,
-        modality: offer.modality,
-        city: offer.city,
-        publicationDate: offer.publicationDate,
-        date: offer.date,
-        salary: new Intl.NumberFormat('es-CO', {
-          style: 'currency',
-          currency: 'COP',
-          minimumFractionDigits: 2
-        }).format(offer.salary),
-        companyName: offer.company ? offer.company.name : null,
-        status: offer.status, // ahora es atributo directo
-        phone: offer.phone,
-        email: offer.email
-      })));
+      return res.json(offers);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Error al obtener las ofertas' });

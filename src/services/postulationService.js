@@ -130,10 +130,12 @@ const PostulationService = {
   },
 
   async getPostulationsByOffer(offerId, companyId) {
+    console.log('getPostulationsByOffer called with:', { offerId, companyId });
     const offer = await Offer.findOne({ where: { id: offerId, companyId } });
     if (!offer) {
       throw new Error('Oferta no encontrada o no pertenece a la empresa');
     }
+    console.log('Offer found:', offer.toJSON());
 
     const postulations = await Postulation.findAll({
       where: { offerId },
@@ -141,6 +143,7 @@ const PostulationService = {
         { model: Student, as: 'student', attributes: ['id', 'name', 'email', 'studentCode'] }
       ]
     });
+    console.log('Postulations found:', postulations.map(p => p.toJSON()));
 
     return postulations;
   },

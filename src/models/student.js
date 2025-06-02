@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     statusRegister: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       validate: {
         isIn: [['Aprobado', 'Rechazado', 'Pendiente']]
       },

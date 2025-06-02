@@ -7,7 +7,7 @@ router.post('/', StudentController.create); // Public route for student registra
 
 router.put('/:studentCode', authMiddleware, StudentController.update); // Requires authentication
 
-router.patch('/:studentCode', authMiddleware, StudentController.updateStatusRegister); // Requires authentication
+router.patch('/:studentCode', StudentController.updateStatusRegister); // Requires authentication
 
 router.get('/id/:id', authMiddleware, StudentController.getById); // Requires authentication
 
