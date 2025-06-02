@@ -65,7 +65,11 @@ const StudentService = {
     if (!student) {
       throw new Error('Estudiante no encontrado');
     }
-    return student; // con password incluido, SOLO para login
+    // Solo permitir login si el estado es 'Aprobado'
+    if (student.statusRegister !== 'Aprobado') {
+      throw new Error('Tu registro aún no ha sido aprobado por la universidad.');
+    }
+    return student;
   },
 
   async getStudentByCode(studentCode) {

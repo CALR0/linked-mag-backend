@@ -78,7 +78,11 @@ const CompanyService = {
     if (!company) {
       throw new Error('Empresa no encontrada');
     }
-    return company; // Includes password, only for login
+    // Solo permitir login si el estado es 'Aprobado'
+    if (company.statusRegister !== 'Aprobado') {
+      throw new Error('Tu registro aún no ha sido aprobado por la universidad.');
+    }
+    return company;
   },
 
   async getCompanyByNIT(NIT) {
