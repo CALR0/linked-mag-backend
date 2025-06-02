@@ -5,6 +5,8 @@ const PostulationController = {
 
   async create(req, res) {
     try {
+    const data = req.body;
+    const postulation = await PostulationService.createPostulation(data);
       return res.status(201).json(postulation);
     } catch (error) {
       console.error(error);

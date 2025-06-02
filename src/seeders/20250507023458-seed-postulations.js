@@ -2,7 +2,6 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Insertar postulaciones con status directamente
     await queryInterface.bulkInsert(
       'postulations',
       [
@@ -16,7 +15,35 @@ module.exports = {
         {
           studentId: 2,
           offerId: 2,
-          status: 'Aceptada',
+          status: 'Pendiente',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          studentId: 3,
+          offerId: 3,
+          status: 'Pendiente',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          studentId: 4,
+          offerId: 4,
+          status: 'Pendiente',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          studentId: 5,
+          offerId: 5,
+          status: 'Pendiente',
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          studentId: 6,
+          offerId: 6,
+          status: 'Pendiente',
           createdAt: new Date(),
           updatedAt: new Date()
         }
